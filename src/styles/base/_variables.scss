@@ -1,0 +1,134 @@
+@use '../utils/breakpoints' as *;
+@use '../utils/mixins' as *;
+@use '../utils/functions' as *;
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap');
+
+:root {
+  --font-main: 'Montserrat', sans-serif;
+  --font-second: 'e-Ukraine Head', sans-serif;
+  --font-third: sans-serif;
+
+  --cl-neutral-50: #ffffff;
+  --cl-neutral-75: #f8f8f8;
+  --cl-neutral-100: #efefef;
+  --cl-neutral-200: #dcdcdc;
+  --cl-neutral-300: #bdbdbd;
+  --cl-neutral-400: #989898;
+  --cl-neutral-500: #7c7c7c;
+  --cl-neutral-600: #656565;
+  --cl-neutral-700: #525252;
+  --cl-neutral-800: #464646;
+  --cl-neutral-900: #3d3d3d;
+  --cl-neutral-950: #292929;
+
+  --cl-secondary-25: #fefcf6;
+  --cl-secondary-50: #fef9ee;
+  --cl-secondary-100: #fdf2d7;
+  --cl-secondary-200: #fbe1ad;
+  --cl-secondary-300: #f8ca79;
+  --cl-secondary-400: #f4a943;
+  --cl-secondary-500: #f08d1c;
+  --cl-secondary-600: #e17415;
+  --cl-secondary-700: #bb5913;
+  --cl-secondary-800: #954717;
+  --cl-secondary-900: #783b16;
+  --cl-secondary-950: #411c09;
+
+  --cl-primary-50: #f3f6f4;
+  --cl-primary-100: #e1eae1;
+  --cl-primary-200: #c5d5c8;
+  --cl-primary-300: #9fb6a4;
+  --cl-primary-400: #74937b;
+  --cl-primary-500: #55775e;
+  --cl-primary-600: #3f5c47;
+  --cl-primary-700: #33493a;
+  --cl-primary-800: #2a3b2f;
+  --cl-primary-900: #233127;
+  --cl-primary-950: #131b16;
+
+  --cl-accent-50: #fff1f1;
+  --cl-accent-100: #ffdfdf;
+  --cl-accent-200: #ffc5c5;
+  --cl-accent-300: #ff9d9d;
+  --cl-accent-400: #ff6464;
+  --cl-accent-500: #ff3232;
+  --cl-accent-600: #ed1515;
+  --cl-accent-700: #c80d0d;
+  --cl-accent-800: #a50f0f;
+  --cl-accent-900: #881414;
+  --cl-accent-950: #4b0404;
+
+  --gradient-deg: 180deg;
+  --cl-gradient: linear-gradient(
+    var(--gradient-deg),
+    var(--cl-primary-700) 0%,
+    var(--cl-primary-600) 100%
+  );
+
+  --cl-black: #242426;
+
+  --cl-black-rgb: 0 0 0;
+
+  --cl-black-regular: #464649;
+
+  --cl-secondary: #e36b40;
+  --cl-secondary-rgb: 236 97 42;
+
+  --cl-white: #ffffff;
+  --cl-white-rgb: 255 255 255;
+
+  --cl-light-bg: #ebf9ff;
+
+  --cl-horizon-bg: #f3fafb; /*Placing BG*/
+
+  --cl-gray-line: #d3d3d9;
+
+  --cl-light-gray: #d0d1d3;
+
+  --cl-mid-gray: #888996;
+
+  --cl-dark-gray: #686976;
+
+  --cl-darked-gray: #363638;
+
+  --cl-black-gray: #54545f;
+
+  --cl-light-orange: #f58f45;
+
+  --cl-teal: #009e94;
+
+  --cl-sky: #1799ba;
+
+  --cl-amber: #f7ad40;
+
+  --cl-green: #229f5b;
+
+  --cl-light-beige: #fef5e8;
+
+  /* --mobile-menu-start-point and @custom-media --mobile-menu-start-point must be the same */
+  --mobile-menu-start-point: 1200;
+
+  --vh: calc(100vh / 100);
+
+  --cart-width: 160px;
+
+  --font-second-letter-spacing: 0.02em;
+
+  --top-nav: 0;
+
+  --title-decor-color: var(--cl-secondary-500);
+
+  --arw: 1;
+  --arh: 1;
+}
+
+$mobile-menu-start-point: 1200px;
+$mobile-menu-end-point: 1201px;
+
+@media (max-width: $mobile-menu-start-point) {
+  /* Styles for mobile menu start point */
+}
+
+@media (min-width: $mobile-menu-end-point) {
+  /* Styles for mobile menu end point */
+}

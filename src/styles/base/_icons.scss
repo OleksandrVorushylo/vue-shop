@@ -1,0 +1,134 @@
+/* /icons/ */
+
+@font-face {
+  font-family: 'icomoon';
+  src: url('/icons/icomoon.eot?6chnul');
+  src:
+    url('/icons/icomoon.eot?6chnul#iefix') format('embedded-opentype'),
+    url('/icons/icomoon.ttf?6chnul') format('truetype'),
+    url('/icons/icomoon.woff?6chnul') format('woff'),
+    url('/icons/icomoon.svg?6chnul#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
+
+[class^='icon-'],
+[class*=' icon-'] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: never;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-arrow-chevron-prev:before {
+  content: '\e920';
+}
+.icon-arrow-chevron-next:before {
+  content: '\e921';
+}
+.icon-shop:before {
+  content: '\e91d';
+}
+.icon-clear:before {
+  content: '\e91f';
+}
+.icon-instagram:before {
+  content: '\e90a';
+}
+.icon-telegram:before {
+  content: '\e90c';
+}
+.icon-address:before {
+  content: '\e91c';
+}
+.icon-info:before {
+  content: '\e91e';
+  color: #525252;
+}
+.icon-cart-second:before {
+  content: '\e91b';
+}
+.icon-line-arrow-down:before {
+  content: '\e90f';
+}
+.icon-phone:before {
+  content: '\e900';
+}
+.icon-profile:before {
+  content: '\e901';
+}
+.icon-search-second:before {
+  content: '\e902';
+}
+.icon-burger:before {
+  content: '\e903';
+}
+.icon-minus:before {
+  content: '\e904';
+}
+.icon-plus:before {
+  content: '\e905';
+}
+.icon-close:before {
+  content: '\e906';
+}
+.icon-date-time:before {
+  content: '\e907';
+}
+.icon-location:before {
+  content: '\e908';
+}
+.icon-mail:before {
+  content: '\e909';
+}
+.icon-facebook:before {
+  content: '\e90b';
+}
+.icon-arrow-chevron:before {
+  content: '\e90d';
+}
+.icon-search:before {
+  content: '\e90e';
+}
+.icon-arrow-next:before {
+  content: '\e910';
+}
+.icon-arrow-prev:before {
+  content: '\e911';
+}
+.icon-star:before {
+  content: '\e912';
+}
+.icon-percent:before {
+  content: '\e913';
+}
+.icon-heart-fill:before {
+  content: '\e914';
+}
+.icon-heart:before {
+  content: '\e915';
+}
+.icon-cart:before {
+  content: '\e916';
+}
+.icon-arrow-down:before {
+  content: '\e917';
+}
+.icon-arrow-up:before {
+  content: '\e918';
+}
+.icon-arrow-left:before {
+  content: '\e919';
+}
+.icon-arrow-right:before {
+  content: '\e91a';
+}

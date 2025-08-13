@@ -1,0 +1,130 @@
+.swiper-buttons {
+  display: flex;
+  align-items: flex-end;
+  gap: ac(16px, 14px);
+  position: relative;
+  left: auto;
+  top: auto;
+  bottom: auto;
+  margin: 0 auto;
+  width: 100%;
+
+  .swiper-scrollbar.swiper-scrollbar-horizontal {
+    position: relative;
+    width: auto;
+    height: 3px;
+    background: var(--cl-primary-500);
+    top: auto;
+    left: auto;
+    bottom: auto;
+    right: auto;
+    border-radius: 100px;
+    margin-right: ac(32px, 0px);
+    /*mt not design*/
+    margin-top: ac(40px, 30px);
+    flex: 1;
+
+    &:not(:last-child) {
+      @media (min-width: 552px) {
+        margin-bottom: ac(20px, 18px);
+      }
+    }
+
+    .swiper-scrollbar-drag {
+      top: -1.5px;
+      height: 6px;
+      background: var(--cl-primary-200);
+      border-radius: inherit;
+      cursor: grab;
+
+      @media (max-width: 551px) {
+        height: 12px;
+        top: -4.5px;
+      }
+    }
+
+    &.swiper-scrollbar-second {
+      background: var(--cl-secondary-25);
+
+      .swiper-scrollbar-drag {
+        background: var(--cl-secondary-500);
+      }
+    }
+  }
+
+  .swiper-button {
+    position: relative;
+    transform: none;
+    margin: 0;
+    left: auto;
+    right: auto;
+    top: auto;
+    bottom: auto;
+    display: flex;
+    $size: ac(44px, 40px);
+    width: $size;
+    min-width: $size;
+    height: $size;
+    border-radius: 8px;
+    justify-content: center;
+    align-items: center;
+    color: var(--white, #fff);
+    border: 1px solid var(--cl-primary-300);
+    border-bottom-width: 3px;
+    transition: 0.3s;
+    background-color: transparent;
+    margin-top: ac(40px, 32px);
+
+    &::after {
+      display: none;
+    }
+    &::before {
+      content: '\e91a';
+      display: block;
+      font-family: 'icomoon' !important;
+      font-size: ac(24px, 22px);
+    }
+
+    &.swiper-button-prev {
+      &::before {
+        content: '\e919';
+        /*margin-left: -2px;*/
+      }
+    }
+
+    &.swiper-button-next {
+      &::before {
+        /*margin-right: -2px;*/
+      }
+    }
+
+    &:hover {
+      border-color: var(--cl-secondary-500);
+      background-color: var(--cl-secondary-25);
+      color: var(--cl-primary-700);
+      transform: translateY(-2px);
+    }
+
+    &:active {
+      transform: translateY(2px);
+    }
+
+    &.swiper-button-lock {
+      display: none;
+    }
+
+    &.swiper-button-disabled {
+      opacity: 0.7 !important;
+    }
+
+    &.swiper-button-second {
+      border-color: var(--cl-secondary-500);
+      background-color: var(--cl-secondary-25);
+      color: var(--cl-primary-700);
+
+      &:hover {
+        background-color: var(--cl-secondary-200);
+      }
+    }
+  }
+}

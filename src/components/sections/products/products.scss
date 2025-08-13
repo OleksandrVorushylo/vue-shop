@@ -1,0 +1,121 @@
+.products-sec {
+  padding-top: ac(88px, 45px);
+  padding-bottom: ac(72px, 56px);
+  overflow: hidden;
+  background: var(--cl-gradient);
+  --text-color: var(--cl-neutral-100);
+  --title-color: var(--cl-neutral-100);
+  color: var(--text-color);
+
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    position: relative;
+    grid-row-gap: ac(48px, 32px);
+
+    &:after {
+      position: absolute;
+      top: ac(-88px, -45px);
+      bottom: ac(-72px, -56px);
+      left: 100%;
+      width: 72px;
+      background: var(--cl-gradient);
+      content: '';
+      pointer-events: none;
+      z-index: 1;
+      mask-image: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 0%,
+        rgba(0, 0, 0, 1) 65%,
+        rgba(0, 0, 0, 1) calc(100% - 5px),
+        rgba(0, 0, 0, 0) 100%
+      );
+      opacity: 0.7;
+
+      @media (min-width: 1440px) {
+        width: ac(90px, 600px, 2600, 1440);
+      }
+    }
+  }
+
+  &__title {
+    color: var(--title-color);
+    @media (min-width: 902px) {
+      max-width: calc(100% - 300px);
+    }
+  }
+
+  &__buttons {
+    padding-top: ac(4px, 0px);
+  }
+
+  &__slider {
+    overflow: visible;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    padding-bottom: 1px;
+
+    .swiper {
+      overflow: visible;
+      margin-left: 0;
+
+      &:not(.swiper-initialized) {
+        display: none;
+      }
+
+      .swiper-slide {
+        height: auto;
+        display: flex;
+        align-items: stretch;
+        justify-content: stretch;
+
+        .product-card {
+          flex: 1;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 901px) {
+    .products-sec {
+      &__wrap {
+        &:after {
+          display: none;
+        }
+      }
+
+      &__buttons {
+        order: 10;
+        padding-top: 15px;
+      }
+    }
+  }
+
+  @media (max-width: 551px) {
+    .products-sec {
+      &__slider {
+        .swiper {
+          width: 100%;
+          max-width: 320px;
+        }
+
+        .swiper-buttons {
+          .swiper-button {
+            display: none;
+          }
+        }
+      }
+
+      &__buttons {
+        width: 100%;
+
+        .btn {
+          width: 100%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,144 @@
+.hero-sec {
+  margin-top: var(--top-nav, 96px);
+  --text-color: var(--cl-neutral-100);
+  --title-color: var(--cl-neutral-50);
+  background: var(--cl-gradient);
+  color: var(--text-color);
+  overflow: hidden;
+
+  &__wrap {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: relative;
+    z-index: 5;
+    padding-top: ac(87px, 52px);
+    padding-bottom: ac(84px, 52px);
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 50%;
+  }
+
+  &__title {
+    color: var(--title-color);
+    &:not(:last-child) {
+      margin-bottom: ac(24px, 16px);
+    }
+  }
+
+  &__text {
+    &:not(:last-child) {
+      margin-bottom: ac(24px, 16px);
+    }
+  }
+
+  &__buttons {
+    padding-top: ac(15px, 8px);
+  }
+
+  &__image {
+    left: 54.74%;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    position: absolute;
+
+    img {
+      width: 100%;
+      height: auto;
+      max-height: unset;
+      object-fit: cover;
+      min-height: 100%;
+    }
+
+    &.object-contain {
+      img {
+        object-fit: contain;
+      }
+    }
+
+    &.object-bottom {
+      img {
+        object-position: bottom;
+      }
+    }
+  }
+
+  @media (max-width: 1370px) {
+    .hero-sec {
+      &__image {
+        left: 58%;
+      }
+    }
+  }
+
+  @media (max-width: 901px) {
+    .hero-sec {
+      &__image {
+        left: 56%;
+      }
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-sec {
+      &__wrap {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        padding-top: 32px;
+        padding-bottom: 0;
+        min-height: calc(100vh - 64px);
+      }
+
+      &__content {
+        width: 100%;
+        grid-row-gap: 7px;
+
+        &:not(:last-child) {
+          margin-bottom: 24px;
+        }
+      }
+
+      &__title {
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+
+      &__text {
+        br {
+          display: none;
+        }
+
+        &.content-element {
+          &.body-text-18 {
+            font-size: 16px;
+            line-height: 1.56;
+          }
+        }
+
+        &:not(:last-child) {
+          margin-bottom: 10px;
+        }
+      }
+
+      &__image {
+        margin-top: auto;
+        position: relative;
+        top: auto;
+        left: auto;
+        right: auto;
+        bottom: auto;
+        width: 100%;
+        margin-left: 22px;
+        margin-bottom: -1px;
+      }
+    }
+  }
+}

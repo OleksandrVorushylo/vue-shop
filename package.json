@@ -1,0 +1,48 @@
+{
+  "name": "vue-shop",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix",
+    "format": "prettier --write src/",
+    "webp": "node --experimental-specifier-resolution=node convert-imgs.js"
+  },
+  "dependencies": {
+    "axios": "^1.11.0",
+    "normalize.css": "^8.0.1",
+    "pinia": "^3.0.3",
+    "simplebar": "^6.3.2",
+    "simplebar-vue": "^2.4.2",
+    "swiper": "^11.2.10",
+    "vue": "^3.5.18",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.31.0",
+    "@fluejs/noscroll": "^1.0.0",
+    "@tailwindcss/postcss": "^4.1.11",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "@vitejs/plugin-vue-jsx": "^5.0.1",
+    "@vue/eslint-config-prettier": "^10.2.0",
+    "@vue/eslint-config-standard": "^9.0.1",
+    "autoprefixer": "^10.4.21",
+    "eslint": "^9.31.0",
+    "eslint-plugin-vue": "~10.3.0",
+    "globals": "^16.3.0",
+    "postcss": "^8.5.6",
+    "prettier": "3.6.2",
+    "sass-embedded": "^1.90.0",
+    "tailwindcss": "^4.1.11",
+    "vite": "^7.0.6",
+    "vite-plugin-imagemin": "^0.6.1",
+    "vite-plugin-vue-devtools": "^8.0.0",
+    "webp-converter": "^2.3.3"
+  }
+}
