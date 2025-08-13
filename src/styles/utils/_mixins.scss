@@ -1,0 +1,57 @@
+@use 'sass:meta';
+@use 'sass:math';
+@use 'sass:string';
+
+@mixin max-line-length($num-of-rows) {
+  @if $num-of-rows == 1 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  } @else {
+    padding: 0 !important;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    -webkit-line-clamp: $num-of-rows;
+  }
+}
+
+@mixin transition-all($time: 0.25s) {
+  transition: all ease-in-out $time;
+}
+
+@mixin aspect-ratio($width, $height, $maxHeight: 9999px, $minHeight: 0px) {
+  $percentage: math.percentage(math.div($height, $width));
+
+  position: relative;
+  overflow: hidden;
+  mask-image: radial-gradient(white, black);
+
+  &::before {
+    content: '';
+    display: block;
+    padding-bottom: string.unquote('max(min(#{$percentage}, #{$maxHeight}), #{$minHeight})');
+  }
+
+  img,
+  iframe,
+  video,
+  svg {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+  }
+}
+
+@mixin transparent-bg-input($textColor: #ffffff) {
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: $textColor !important;
+  }
+}
