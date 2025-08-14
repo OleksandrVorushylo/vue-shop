@@ -1,7 +1,7 @@
 <script setup>
-import './footer.scss'
-import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue'
-import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue'
+import './footer.scss';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
+import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
 </script>
 
 <template>
@@ -21,13 +21,13 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue'
             </div>
             <div class="footer__socials">
               <ButtonsWrapper variant="socials" additional-class="footer__socials-links">
-                <IconBtn tag="a" variant="social" href="#" target="_blank">
+                <IconBtn variant="social" href="#" target="_blank">
                   <i class="icon-instagram"></i>
                 </IconBtn>
-                <IconBtn tag="a" variant="social" href="#" target="_blank">
+                <IconBtn variant="social" href="#" target="_blank">
                   <i class="icon-facebook"></i>
                 </IconBtn>
-                <IconBtn tag="a" variant="social" href="#" target="_blank">
+                <IconBtn variant="social" href="#" target="_blank">
                   <i class="icon-telegram"></i>
                 </IconBtn>
               </ButtonsWrapper>

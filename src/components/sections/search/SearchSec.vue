@@ -1,4 +1,5 @@
 <script setup>
+import './search.scss'
 import SearchContainer from '@/components/sections/search/SearchContainer.vue'
 import SearchCategoriesPopup from '@/components/sections/search/SearchCategoriesPopup.vue'
 </script>

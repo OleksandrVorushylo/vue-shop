@@ -1,7 +1,7 @@
 <script setup>
-import './hero.scss'
-import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue'
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
+import './hero.scss';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
 </script>
 
 <template>
@@ -20,7 +20,7 @@ import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
             </p>
           </div>
           <ButtonsWrapper :additional-class="'hero-sec__buttons'">
-            <BaseButton tag="a" href="#"> Дивитися всі товари </BaseButton>
+            <BaseButton to="/products"> Дивитися всі товари </BaseButton>
           </ButtonsWrapper>
         </div>
         <div class="hero-sec__image object-contain object-bottom">

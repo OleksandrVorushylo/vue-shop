@@ -1,6 +1,7 @@
 <script setup>
-import './button.scss'
-import { ref, computed } from 'vue'
+import './button.scss';
+import { RouterLink } from 'vue-router';
+import { ref, computed } from 'vue';
 
 const props = defineProps({
   type: {
@@ -19,40 +20,40 @@ const props = defineProps({
     type: String,
     default: '',
   },
-  tag: {
-    type: String,
-    default: 'button',
-  },
   additionalClass: {
     type: String,
     default: '',
   },
-  href: {
-    type: String,
-    default: '#',
-  },
-})
+  href: String,
+  to: String,
+});
 
-const btn = ref(null)
+const btn = ref(null);
 
 const classes = computed(() => [
   'btn',
   props.variant ? `btn-${props.variant}` : '',
   props.size === 'small' ? 'btn-small' : '',
   props.additionalClass,
-])
+]);
 </script>
 
 <template>
-  <button v-if="tag === 'button'" ref="btn" :type="type" :class="classes">
+  <RouterLink v-if="to" ref="btn" :to="to" :class="classes">
     <span v-if="decor" class="btn__shadow"></span>
     <span v-if="decor" class="btn__edge"></span>
     <span class="btn__text"><slot /></span>
-  </button>
+  </RouterLink>
 
-  <a v-else-if="tag === 'a'" ref="btn" :href="href" :class="classes">
+  <a v-else-if="href" ref="btn" :href="href" :class="classes">
     <span v-if="decor" class="btn__shadow"></span>
     <span v-if="decor" class="btn__edge"></span>
     <span class="btn__text"><slot /></span>
   </a>
+
+  <button v-else ref="btn" :type="type" :class="classes">
+    <span v-if="decor" class="btn__shadow"></span>
+    <span v-if="decor" class="btn__edge"></span>
+    <span class="btn__text"><slot /></span>
+  </button>
 </template>

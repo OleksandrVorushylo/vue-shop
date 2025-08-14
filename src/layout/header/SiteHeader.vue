@@ -1,74 +1,74 @@
 <script setup>
-import './header.scss'
-import SimpleBar from 'simplebar-vue'
-import 'simplebar-vue/dist/simplebar.min.css'
-import { ref, onMounted, onBeforeUnmount, watch } from 'vue'
-import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue'
-import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue'
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
+import './header.scss';
+import SimpleBar from 'simplebar-vue';
+import 'simplebar-vue/dist/simplebar.min.css';
+import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
+import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
 
 // refs для элементов, которые в шаблоне
-const headerRef = ref(null)
-const headerMobileRef = ref(null)
-const topHeaderRef = ref(null)
-const headerCloseWrapperRef = ref(null)
-const menuToggleRef = ref(null)
-const menuToggleMobRef = ref(null)
-const menuCloseMobRef = ref(null)
-const languageDropdownRef = ref(null)
+const headerRef = ref(null);
+const headerMobileRef = ref(null);
+const topHeaderRef = ref(null);
+const headerCloseWrapperRef = ref(null);
+const menuToggleRef = ref(null);
+const menuToggleMobRef = ref(null);
+const menuCloseMobRef = ref(null);
+const languageDropdownRef = ref(null);
 
 // Состояния
-const scrolled = ref(false)
-const openMenu = ref(false)
-const activeDropdownIndex = ref(null)
+const scrolled = ref(false);
+const openMenu = ref(false);
+const activeDropdownIndex = ref(null);
 const mobileMenuStartPoint = parseInt(
   getComputedStyle(document.documentElement).getPropertyValue('--mobile-menu-start-point'),
-)
+);
 
 // Проверка на мобайл меню
-const isMobileMenuEnable = ref(window.outerWidth <= mobileMenuStartPoint)
+const isMobileMenuEnable = ref(window.outerWidth <= mobileMenuStartPoint);
 
 // Обработчик скролла для добавления классов scrolled
 function onScroll() {
-  const scrollTop = window.pageYOffset || document.documentElement.scrollTop
-  scrolled.value = scrollTop > 50
+  const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+  scrolled.value = scrollTop > 50;
   // Можно тут же управлять стилями, либо через классы в шаблоне
 }
 
 // Обработчик переключения меню (бургер)
 function toggleMenu() {
-  openMenu.value = !openMenu.value
-  updatePositionMobileNav()
+  openMenu.value = !openMenu.value;
+  updatePositionMobileNav();
   // Тут можно добавить логику scrollLock, если нужно
 }
 
 // Обновить позицию моб меню CSS переменной
 function updatePositionMobileNav() {
-  if (!headerRef.value) return
-  const topNavValue = `${headerRef.value.clientHeight}px`
-  document.documentElement.style.setProperty('--top-nav', topNavValue)
+  if (!headerRef.value) return;
+  const topNavValue = `${headerRef.value.clientHeight}px`;
+  document.documentElement.style.setProperty('--top-nav', topNavValue);
 }
 
 // Обновить меню при ресайзе
 function updateMenu() {
-  isMobileMenuEnable.value = window.outerWidth <= mobileMenuStartPoint
+  isMobileMenuEnable.value = window.outerWidth <= mobileMenuStartPoint;
 
   if (!isMobileMenuEnable.value) {
-    openMenu.value = false
+    openMenu.value = false;
   }
 
-  updatePositionMobileNav()
+  updatePositionMobileNav();
 }
 
 // Dropdown open/close по индексу
 function toggleDropdown(index) {
-  activeDropdownIndex.value = activeDropdownIndex.value === index ? null : index
+  activeDropdownIndex.value = activeDropdownIndex.value === index ? null : index;
 }
 
 // Хэндлер клика по языковому дропдауну для мобилки
 function toggleLanguageDropdown() {
   if (window.innerWidth <= 1024 && languageDropdownRef.value) {
-    languageDropdownRef.value.classList.toggle('active')
+    languageDropdownRef.value.classList.toggle('active');
   }
 }
 
@@ -79,72 +79,72 @@ function onDocumentClick(e) {
     languageDropdownRef.value &&
     !languageDropdownRef.value.contains(e.target)
   ) {
-    languageDropdownRef.value.classList.remove('active')
+    languageDropdownRef.value.classList.remove('active');
   }
 }
 
 // Sticky header logic — плавное скрытие/появление при скролле вверх/вниз
-let prevScrollPos = window.pageYOffset
+let prevScrollPos = window.pageYOffset;
 function stickyScrollHandler() {
-  if (!headerRef.value || !headerMobileRef.value) return
+  if (!headerRef.value || !headerMobileRef.value) return;
 
-  const currentScrollPos = window.pageYOffset
-  const headerHeight = headerRef.value.offsetHeight
-  const headerMobileHeight = headerMobileRef.value.offsetHeight + 16
+  const currentScrollPos = window.pageYOffset;
+  const headerHeight = headerRef.value.offsetHeight;
+  const headerMobileHeight = headerMobileRef.value.offsetHeight + 16;
 
-  const stickyBtn = document.querySelector('.sticky-button')
+  const stickyBtn = document.querySelector('.sticky-button');
 
   if (window.scrollY > 0) {
     if (prevScrollPos > currentScrollPos) {
       // Скролл вверх
-      headerRef.value.style.top = '0'
-      headerMobileRef.value.style.bottom = '0'
-      scrolled.value = true
+      headerRef.value.style.top = '0';
+      headerMobileRef.value.style.bottom = '0';
+      scrolled.value = true;
       if (stickyBtn) {
-        stickyBtn.style.transitionDelay = '0s'
-        stickyBtn.style.transform = 'translateY(0)'
+        stickyBtn.style.transitionDelay = '0s';
+        stickyBtn.style.transform = 'translateY(0)';
       }
     } else {
       // Скролл вниз
-      headerRef.value.style.top = `-${headerHeight + 3}px`
-      headerMobileRef.value.style.bottom = `-${headerMobileHeight + 3}px`
+      headerRef.value.style.top = `-${headerHeight + 3}px`;
+      headerMobileRef.value.style.bottom = `-${headerMobileHeight + 3}px`;
       if (stickyBtn) {
-        stickyBtn.style.transform = `translateY(${stickyBtn.clientHeight}px)`
-        stickyBtn.style.transitionDelay = '0.2s'
+        stickyBtn.style.transform = `translateY(${stickyBtn.clientHeight}px)`;
+        stickyBtn.style.transitionDelay = '0.2s';
       }
     }
   }
 
   if (window.scrollY === 0) {
-    scrolled.value = false
-    headerRef.value.style.top = '0'
-    headerMobileRef.value.style.bottom = '0'
+    scrolled.value = false;
+    headerRef.value.style.top = '0';
+    headerMobileRef.value.style.bottom = '0';
     if (stickyBtn) {
-      stickyBtn.style.transitionDelay = '0s'
-      stickyBtn.style.transform = 'translateY(0)'
+      stickyBtn.style.transitionDelay = '0s';
+      stickyBtn.style.transform = 'translateY(0)';
     }
   }
 
-  prevScrollPos = currentScrollPos
+  prevScrollPos = currentScrollPos;
 }
 
 onMounted(() => {
-  window.addEventListener('scroll', onScroll)
-  window.addEventListener('scroll', stickyScrollHandler)
-  window.addEventListener('resize', updateMenu)
-  window.addEventListener('orientationchange', updateMenu)
-  document.addEventListener('click', onDocumentClick)
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('scroll', stickyScrollHandler);
+  window.addEventListener('resize', updateMenu);
+  window.addEventListener('orientationchange', updateMenu);
+  document.addEventListener('click', onDocumentClick);
 
-  updatePositionMobileNav()
-})
+  updatePositionMobileNav();
+});
 
 onBeforeUnmount(() => {
-  window.removeEventListener('scroll', onScroll)
-  window.removeEventListener('scroll', stickyScrollHandler)
-  window.removeEventListener('resize', updateMenu)
-  window.removeEventListener('orientationchange', updateMenu)
-  document.removeEventListener('click', onDocumentClick)
-})
+  window.removeEventListener('scroll', onScroll);
+  window.removeEventListener('scroll', stickyScrollHandler);
+  window.removeEventListener('resize', updateMenu);
+  window.removeEventListener('orientationchange', updateMenu);
+  document.removeEventListener('click', onDocumentClick);
+});
 </script>
 
 <template>
@@ -200,7 +200,7 @@ onBeforeUnmount(() => {
                   link: '/products',
                 },
                 { title: 'Доставка', link: '/delivery' },
-                { title: 'Акція тижня', link: '/weekly-offer' },
+                { title: 'Акція тижня', link: '/on-sale' },
                 { title: 'Контакти', link: '/contacts' },
               ]"
               :key="index"

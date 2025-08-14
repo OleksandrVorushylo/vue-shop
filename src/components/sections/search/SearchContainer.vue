@@ -1,4 +1,6 @@
-<script setup></script>
+<script setup>
+import BasePagination from '@/components/base/pagination/BasePagination.vue';
+</script>
 
 <template>
   <div id="content-sticky" class="search-sec__container">
@@ -869,21 +871,11 @@
           </div>
         </div>
       </div>
-      <ul class="pagination search-sec__result-pagination">
-        <li class="pagination-btn pagination-prev pagination-btn-disabled">
-          <i class="icon-arrow-chevron-prev"></i>
-        </li>
-
-        <li class="pagination-num active"><span>1</span></li>
-        <li class="pagination-num"><span>2</span></li>
-        <li class="pagination-num"><span>3</span></li>
-        <li class="pagination-num pointer-events-none">...</li>
-        <li class="pagination-num"><span>49</span></li>
-
-        <li class="pagination-btn pagination-next">
-          <i class="icon-arrow-chevron-next"></i>
-        </li>
-      </ul>
+      <BasePagination
+        :total-pages="3"
+        :current-page="1"
+        additionalClass="search-sec__result-pagination"
+      ></BasePagination>
     </div>
   </div>
 </template>

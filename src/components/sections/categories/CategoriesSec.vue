@@ -1,7 +1,7 @@
 <script setup>
-import './categories.scss'
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
-import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue'
+import './categories.scss';
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
 </script>
 
 <template>
@@ -228,7 +228,7 @@ import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue'
             </div>
           </div>
           <ButtonsWrapper :additional-class="'categories-sec__buttons'">
-            <BaseButton tag="a" variant="second" href="#"> Більше категорій </BaseButton>
+            <BaseButton variant="second" href="#"> Більше категорій </BaseButton>
           </ButtonsWrapper>
         </div>
       </div>

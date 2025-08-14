@@ -1,12 +1,9 @@
 <script setup>
-import './icon-btn.scss'
-import { computed } from 'vue'
+import './icon-btn.scss';
+import { computed } from 'vue';
+import { RouterLink } from 'vue-router';
 
 const props = defineProps({
-  tag: {
-    type: String,
-    default: 'button',
-  },
   type: {
     type: String,
     default: 'button',
@@ -15,33 +12,35 @@ const props = defineProps({
     type: String,
     default: 'icon', // social
   },
-  additionalClass: {
-    type: String,
-    default: '',
-  },
-  href: {
-    type: String,
-    default: '#',
-  },
   size: {
     type: String,
     default: '',
   },
-})
+  additionalClass: {
+    type: String,
+    default: '',
+  },
+  href: String,
+  to: String,
+});
 
 const btnClass = computed(() => [
   props.variant ? `${props.variant}-btn` : '',
   props.size === 'big' ? 'big-size' : '',
   props.additionalClass,
-])
+]);
 </script>
 
 <template>
-  <button :type="type" v-if="tag === 'button'" :class="btnClass">
-    <slot></slot>
-  </button>
+  <RouterLink v-if="to" :to="to" :class="btnClass">
+    <slot />
+  </RouterLink>
 
-  <a v-else-if="tag === 'a'" :href="href" :class="btnClass">
-    <slot></slot>
+  <a v-else-if="href" :href="href" :class="btnClass">
+    <slot />
   </a>
+
+  <button v-else :type="type" :class="btnClass">
+    <slot />
+  </button>
 </template>
