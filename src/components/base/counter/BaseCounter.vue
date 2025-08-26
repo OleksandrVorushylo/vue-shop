@@ -1,6 +1,9 @@
 <script setup>
-import './counter.scss'
-import { computed, ref, watch } from 'vue'
+import './counter.scss';
+import { computed, ref, watch } from 'vue';
+import { useCartStore } from '@/stores/cart.store.js';
+
+const cartStore = useCartStore();
 
 const props = defineProps({
   id: {
@@ -31,48 +34,59 @@ const props = defineProps({
     type: String,
     default: '', // second
   },
-})
+  productId: {
+    type: String,
+  },
+});
 
-const emit = defineEmits(['update:value'])
+const emit = defineEmits(['update:value']);
 
-const count = ref(props.value)
-const counterBtnPlus = ref(null)
-const counterBtnMinus = ref(null)
-const counterInput = ref(null)
+const count = ref(props.value);
+const counterBtnPlus = ref(null);
+const counterBtnMinus = ref(null);
+const counterInput = ref(null);
 
 const increment = () => {
   if (count.value + props.stepValue <= props.maxValue) {
-    count.value += props.stepValue
-    emit('update:value', count.value)
+    count.value += props.stepValue;
+    emit('update:value', count.value);
+    if (props.productId.value !== '') {
+      console.log(props.productId);
+      cartStore.addToCart({ id: props.productId });
+    }
   }
-}
+};
 
 const decrement = () => {
   if (count.value - props.stepValue >= props.minValue) {
-    count.value -= props.stepValue
-    emit('update:value', count.value)
+    count.value -= props.stepValue;
+    emit('update:value', count.value);
+    if (props.productId.value !== '') {
+      console.log(props.productId);
+      cartStore.decreaseQuantity(props.productId);
+    }
   }
-}
+};
 
 const updateValue = (event) => {
-  let newValue = Number(event.target.value)
-  if (newValue < props.minValue) newValue = props.minValue
-  if (newValue > props.maxValue) newValue = props.maxValue
-  count.value = newValue
-  emit('update:value', count.value)
-}
+  let newValue = Number(event.target.value);
+  if (newValue < props.minValue) newValue = props.minValue;
+  if (newValue > props.maxValue) newValue = props.maxValue;
+  count.value = newValue;
+  emit('update:value', count.value);
+};
 
 watch(
   () => props.value,
   (newVal) => {
-    count.value = newVal
+    count.value = newVal;
   },
-)
+);
 
 const counterClass = computed(() => [
   props.variant === 'second' ? 'counter-second' : '',
   props.additionalClass,
-])
+]);
 </script>
 
 <template>

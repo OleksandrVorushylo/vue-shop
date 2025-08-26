@@ -1,29 +1,28 @@
 <script setup>
-import './products.scss'
+import './products.scss';
 
-import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/scrollbar'
-import 'swiper/css/autoplay'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
 
-import '../../plugins/swiper/swiper.scss'
+import '../../plugins/swiper/swiper.scss';
 
-import { Navigation, Scrollbar, Autoplay } from 'swiper/modules'
-import ProductCard from '@/components/ui/product-card/ProductCard.vue'
-import { onMounted, ref } from 'vue'
+import { Navigation, Scrollbar, Autoplay } from 'swiper/modules';
+import ProductCard from '@/components/ui/product-card/ProductCard.vue';
+import { computed, onMounted, ref } from 'vue';
+import { useProductsStore } from '@/stores/products.store.js';
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
 
-const props = defineProps({
-  products: {
-    type: Array,
-  },
-})
+const store = useProductsStore();
 
-const scrollbarSwiperEl = ref(null)
-const prevSwiperEl = ref(null)
-const nextSwiperEl = ref(null)
-const swiperRef = ref(null)
+const scrollbarSwiperEl = ref(null);
+const prevSwiperEl = ref(null);
+const nextSwiperEl = ref(null);
+const swiperRef = ref(null);
 
 const swiperOptions = ref({
   modules: [Navigation, Scrollbar, Autoplay],
@@ -40,48 +39,58 @@ const swiperOptions = ref({
   autoplay: {
     delay: 4000,
     disableOnInteraction: false,
+    pauseOnMouseEnter: window.innerWidth > 1024,
   },
   breakpoints: {
     551: { slidesPerView: 2 },
     768: { slidesPerView: 3 },
     1200: { slidesPerView: 4 },
   },
-})
+});
 
-const convertToBoolean = (value) => value === 'true'
+const convertToBoolean = (value) => value === 'true';
+
+function handleFavorite(product) {
+  store.toggleFavorite(product.id);
+}
+
+const recommendedProducts = computed(() =>
+  store.filteredProducts.filter((item) => item.isRecommended === true),
+);
+
+onMounted(async () => {
+  await store.fetchProducts();
+  await store.fetchFavorites();
+});
 
 onMounted(() => {
-  swiperOptions.value.navigation.nextEl = nextSwiperEl.value
-  swiperOptions.value.navigation.prevEl = prevSwiperEl.value
-  swiperOptions.value.scrollbar.el = scrollbarSwiperEl.value
-
-  console.log(props.products)
-})
+  swiperOptions.value.navigation.nextEl = nextSwiperEl.value;
+  swiperOptions.value.navigation.prevEl = prevSwiperEl.value;
+  swiperOptions.value.scrollbar.el = scrollbarSwiperEl.value;
+});
 </script>
 
 <template>
   <section class="products-sec">
     <div class="cont">
       <div class="products-sec__wrap">
-        <div class="large-title-3 products-sec__title" data-view="fade-l">Що ми пропонуємо</div>
-        <div class="buttons products-sec__buttons">
-          <a href="#" class="btn">
-            <span class="btn__shadow"></span>
-            <span class="btn__edge"></span>
-            <span class="btn__text">Дивитися всі товари</span>
-          </a>
-        </div>
+        <div class="large-title-3 products-sec__title">Що ми пропонуємо</div>
+        <ButtonsWrapper additionalClass="products-sec__buttons">
+          <BaseButton to="/products">Дивитися всі товари</BaseButton>
+        </ButtonsWrapper>
         <div class="products-swiper-wr products-sec__slider">
           <Swiper ref="swiperRef" v-bind="swiperOptions">
-            <SwiperSlide v-for="item in products" :key="item.id">
+            <SwiperSlide v-for="item in recommendedProducts" :key="item.id">
               <ProductCard
                 :image-url="item.photoUrl"
                 :image-webp="item.photoWepb"
                 :title="item.name"
                 :info="item.description"
                 :price="Number(item.price)"
-                :sale="convertToBoolean(item.onSale)"
+                :sale="item.onSale"
                 :newPrice="Number(item.newPrice)"
+                :is-favorite="item.isFavorite"
+                :on-click-favorite="() => handleFavorite(item)"
               ></ProductCard>
             </SwiperSlide>
           </Swiper>

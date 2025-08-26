@@ -1,0 +1,128 @@
+.project-notification {
+  --an-main-bg-cl: var(--project-notification-main-bg-cl, var(--cl-green-400));
+  --an-second-bg-cl: var(--project-notification-second-bg-cl, var(--cl-green-100));
+  position: fixed;
+  bottom: ac(40px, 16px);
+  left: ac(40px, 16px);
+  width: calc(100vw - 32px);
+  max-width: 320px;
+  border: 1px solid var(--cl-neutral-200);
+  border-radius: 8px;
+  background: var(--cl-neutral-50);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  z-index: 999999;
+  animation: fadeToRight 0.3s ease-out;
+  transition: 0.3s;
+  box-shadow: var(--main-shadow);
+
+  &:after {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    content: '';
+    background: var(--an-second-bg-cl);
+    z-index: 1;
+    opacity: 0.5;
+  }
+
+  &.project-notification-remove-animation {
+    opacity: 0;
+    transform: translateX(ac(-40px, -16px));
+  }
+
+  &__close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    transform: translateX(50%) translateY(-50%);
+    z-index: 10;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    $size: 30px;
+    border: 1px solid var(--cl-neutral-200);
+    background: var(--an-second-bg-cl);
+    border-radius: 50%;
+    width: $size;
+    height: $size;
+    color: var(--cl-red-500);
+    transition: 0.3s;
+
+    i {
+      font-size: 12px;
+    }
+
+    &:hover {
+      border-color: var(--cl-neutral-800);
+      background-color: var(--cl-neutral-700);
+      color: var(--cl-red-100);
+    }
+  }
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 20px;
+    border-radius: 8px;
+    overflow: hidden;
+    position: relative;
+    z-index: 5;
+  }
+
+  &__title {
+    font-weight: 600;
+    font-size: ac(18px, 16px);
+    color: var(--cl-neutral-800);
+
+    &:not(:last-child) {
+      margin-bottom: 7px;
+    }
+  }
+
+  &__text {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--cl-neutral-700);
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: anywhere;
+
+    &:not(:last-child) {
+      margin-bottom: 7px;
+    }
+  }
+
+  &__progress-wr {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--cl-neutral-100);
+    border-top: 1px solid var(--cl-neutral-200);
+  }
+
+  &__progress {
+    background: var(--an-main-bg-cl);
+    width: 0;
+    height: 8px;
+  }
+}
+
+@keyframes fadeToRight {
+  from {
+    opacity: 0;
+    transform: translate(ac(-40px, -16px), 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}

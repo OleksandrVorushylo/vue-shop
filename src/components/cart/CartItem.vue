@@ -1,7 +1,11 @@
 <script setup>
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
-import { ref } from 'vue'
-import BaseCounter from '@/components/base/counter/BaseCounter.vue'
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import { computed, ref } from 'vue';
+import BaseCounter from '@/components/base/counter/BaseCounter.vue';
+
+import { useCartStore } from '@/stores/cart.store.js';
+
+const cartStore = useCartStore();
 
 const props = defineProps({
   imageUrl: {
@@ -22,6 +26,10 @@ const props = defineProps({
     type: Number,
     default: 0,
   },
+  newPrice: {
+    type: Number,
+    default: 0,
+  },
   unitPrice: {
     type: String,
     default: '₴',
@@ -34,68 +42,83 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
-  isFavorite: {
+  productId: {
+    type: String,
+  },
+  counterValue: {
+    type: Number,
+  },
+  isOrderCartItem: {
     type: Boolean,
     default: false,
   },
-  isAdded: {
-    type: Boolean,
-    default: false,
-  },
-  onClickAdd: {
-    type: Function,
-  },
-  onClickFavorite: {
-    type: Function,
-  },
-})
+});
 
-const productCount = ref(props.count)
+const productCount = ref(props.count);
+
+const withOrderPrefix = (baseClass) => {
+  return props.isOrderCartItem ? `order-${baseClass}` : baseClass;
+};
 </script>
 
 <template>
-  <div class="cart__item">
-    <a href="#" class="cart__item-link"></a>
-    <div class="cart__item-image">
+  <div :class="withOrderPrefix('cart__item')">
+    <a href="#" :class="withOrderPrefix('cart__item-link')"></a>
+    <div :class="withOrderPrefix('cart__item-image')">
       <picture>
         <source :srcset="imageWebp" type="image/webp" />
         <img :src="imageUrl" loading="lazy" alt="Image" />
       </picture>
     </div>
 
-    <div class="cart__item-visible-price">
+    <div v-if="!isOrderCartItem" :class="withOrderPrefix('cart__item-visible-price')">
       {{ price.toFixed(2).replace('.', ',')
-      }}<span class="cart__item-visible-price-unit">{{ unitPrice }}</span>
+      }}<span :class="withOrderPrefix('cart__item-visible-price-unit')">{{ unitPrice }}</span>
     </div>
 
-    <div class="cart__item-container">
-      <div class="cart__item-content">
-        <div class="cart__item-title">
+    <div :class="withOrderPrefix('cart__item-container')">
+      <div :class="withOrderPrefix('cart__item-content')">
+        <div :class="withOrderPrefix('cart__item-title')">
           {{ title }}
         </div>
-        <div class="cart__item-text">{{ info }}</div>
+        <div :class="withOrderPrefix('cart__item-text')">{{ info }}</div>
       </div>
 
-      <div class="cart__item-result">
-        <div class="cart__item-info">
-          <!--          <div class="cart__item-old-price">$999.00</div>-->
-          <div class="cart__item-price">
-            <div class="cart__item-count">{{ productCount }} x</div>
+      <div :class="withOrderPrefix('cart__item-result')">
+        <div v-if="sale" :class="withOrderPrefix('cart__item-info')">
+          <div v-if="sale" :class="withOrderPrefix('cart__item-old-price')">
             {{ price.toFixed(2).replace('.', ',') }}
-            <span class="cart__item-unit"> {{ unitPrice }} </span>
+          </div>
+          <div :class="withOrderPrefix('cart__item-price')">
+            <div :class="withOrderPrefix('cart__item-count')">{{ counterValue }} x</div>
+            {{ newPrice.toFixed(2).replace('.', ',') }}
+            <span :class="withOrderPrefix('cart__item-unit')"> {{ unitPrice }} </span>
+          </div>
+        </div>
+
+        <div v-else :class="withOrderPrefix('cart__item-info')">
+          <div :class="withOrderPrefix('cart__item-price')">
+            <div :class="withOrderPrefix('cart__item-count')">{{ counterValue }} x</div>
+            {{ price.toFixed(2).replace('.', ',') }}
+            <span :class="withOrderPrefix('cart__item-unit')"> {{ unitPrice }} </span>
           </div>
         </div>
 
         <BaseCounter
           id="product-1"
           variant="second"
-          additionalClass="cart__item-counter"
+          :additional-class="isOrderCartItem ? 'order-cart__item-counter' : 'cart__item-counter'"
+          :productId="productId"
+          :value="counterValue"
           v-model:value="productCount"
         ></BaseCounter>
       </div>
     </div>
 
-    <button class="close-btn cart__item-close">
+    <button
+      @click="cartStore.removeFromCart(productId)"
+      :class="withOrderPrefix('cart__item-close')"
+    >
       <i class="icon-close"></i>
     </button>
   </div>

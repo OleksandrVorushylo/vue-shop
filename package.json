@@ -7,6 +7,7 @@
     "node": "^20.19.0 || >=22.12.0"
   },
   "scripts": {
+    "seed": "node src/seedProducts.js",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
@@ -15,13 +16,22 @@
     "webp": "node --experimental-specifier-resolution=node convert-imgs.js"
   },
   "dependencies": {
+    "@vuelidate/core": "^2.0.3",
+    "@vuelidate/validators": "^2.0.4",
     "axios": "^1.11.0",
+    "backendless": "^7.4.7",
+    "dotenv": "^17.2.1",
+    "firebase": "^12.1.0",
+    "maska": "^3.2.0",
     "normalize.css": "^8.0.1",
     "pinia": "^3.0.3",
+    "pinia-plugin-persistedstate": "^4.5.0",
+    "pnpm": "^10.14.0",
     "simplebar": "^6.3.2",
     "simplebar-vue": "^2.4.2",
     "swiper": "^11.2.10",
     "vue": "^3.5.18",
+    "vue-i18n": "11",
     "vue-router": "4"
   },
   "devDependencies": {

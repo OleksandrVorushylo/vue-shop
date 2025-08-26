@@ -1,10 +1,10 @@
 <script setup>
-import './product-card.scss'
+import './product-card.scss';
 
-import { ref, onMounted } from 'vue'
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue'
-import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue'
-import BaseCounter from '@/components/base/counter/BaseCounter.vue'
+import { ref, onMounted } from 'vue';
+import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
+import BaseCounter from '@/components/base/counter/BaseCounter.vue';
 
 const props = defineProps({
   imageUrl: {
@@ -51,13 +51,19 @@ const props = defineProps({
   onClickFavorite: {
     type: Function,
   },
-})
+  productId: {
+    type: String,
+  },
+  counterValue: {
+    type: Number,
+  },
+});
 
-const card = ref(null)
-const counterBlock = ref(null)
-const favoriteBtn = ref(null)
-const favoriteBtnIcon = ref(null)
-const productCount = ref(0)
+const card = ref(null);
+const counterBlock = ref(null);
+const favoriteBtn = ref(null);
+const favoriteBtnIcon = ref(null);
+const productCount = ref(0);
 </script>
 
 <template>
@@ -89,6 +95,8 @@ const productCount = ref(0)
       <div class="content-element product-card__text">
         {{ info }}
       </div>
+      {{ productId }}
+      <slot></slot>
       <div class="product-card__bottom">
         <div class="product-card__info">
           <div class="product-card__info-wr" :class="sale ? 'if-sale' : ''">
@@ -105,6 +113,8 @@ const productCount = ref(0)
           <BaseCounter
             id="product-swiper-counter-1"
             additionalClass="product-card__counter"
+            :productId="productId"
+            :value="counterValue"
             v-model:value="productCount"
           ></BaseCounter>
           <BaseButton

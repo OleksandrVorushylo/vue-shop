@@ -1,10 +1,10 @@
-import { fileURLToPath, URL } from 'node:url'
+import { fileURLToPath, URL } from 'node:url';
 
-import { defineConfig } from 'vite'
-import vue from '@vitejs/plugin-vue'
-import vueJsx from '@vitejs/plugin-vue-jsx'
-import vueDevTools from 'vite-plugin-vue-devtools'
-import viteImagemin from 'vite-plugin-imagemin'
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+import vueJsx from '@vitejs/plugin-vue-jsx';
+import vueDevTools from 'vite-plugin-vue-devtools';
+import viteImagemin from 'vite-plugin-imagemin';
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -21,12 +21,14 @@ export default defineConfig({
     ),
   ],
   server: {
-    proxy: {
-      '/api': {
-        target: 'https://refinedghost-eu.backendless.app',
-        changeOrigin: true,
-        // без переписывания, чтобы /api осталось в пути
-      },
+    // proxy: {
+    //   '/api': {
+    //     target: 'https://refinedghost-eu.backendless.app',
+    //     changeOrigin: true,
+    //   },
+    // },
+    watch: {
+      ignored: ['**/node_modules/**', '**/dist/**'],
     },
   },
   resolve: {
@@ -45,4 +47,4 @@ export default defineConfig({
       },
     },
   },
-})
+});

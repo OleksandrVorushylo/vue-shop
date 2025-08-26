@@ -21,6 +21,18 @@
   --cl-neutral-900: #3d3d3d;
   --cl-neutral-950: #292929;
 
+  --cl-primary-50: #f3f6f4;
+  --cl-primary-100: #e1eae1;
+  --cl-primary-200: #c5d5c8;
+  --cl-primary-300: #9fb6a4;
+  --cl-primary-400: #74937b;
+  --cl-primary-500: #55775e;
+  --cl-primary-600: #3f5c47;
+  --cl-primary-700: #33493a;
+  --cl-primary-800: #2a3b2f;
+  --cl-primary-900: #233127;
+  --cl-primary-950: #131b16;
+
   --cl-secondary-25: #fefcf6;
   --cl-secondary-50: #fef9ee;
   --cl-secondary-100: #fdf2d7;
@@ -34,29 +46,41 @@
   --cl-secondary-900: #783b16;
   --cl-secondary-950: #411c09;
 
-  --cl-primary-50: #f3f6f4;
-  --cl-primary-100: #e1eae1;
-  --cl-primary-200: #c5d5c8;
-  --cl-primary-300: #9fb6a4;
-  --cl-primary-400: #74937b;
-  --cl-primary-500: #55775e;
-  --cl-primary-600: #3f5c47;
-  --cl-primary-700: #33493a;
-  --cl-primary-800: #2a3b2f;
-  --cl-primary-900: #233127;
-  --cl-primary-950: #131b16;
+  --cl-green-50: #ebfef6;
+  --cl-green-100: #cffce7;
+  --cl-green-200: #a4f6d3;
+  --cl-green-300: #69ecbd;
+  --cl-green-400: #2ddaa1;
+  --cl-green-500: #09c48d;
+  --cl-green-600: #009c71;
+  --cl-green-700: #007d5e;
+  --cl-green-800: #02634c;
+  --cl-green-900: #03513f;
+  --cl-green-950: #002e25;
 
-  --cl-accent-50: #fff1f1;
-  --cl-accent-100: #ffdfdf;
-  --cl-accent-200: #ffc5c5;
-  --cl-accent-300: #ff9d9d;
-  --cl-accent-400: #ff6464;
-  --cl-accent-500: #ff3232;
-  --cl-accent-600: #ed1515;
-  --cl-accent-700: #c80d0d;
-  --cl-accent-800: #a50f0f;
-  --cl-accent-900: #881414;
-  --cl-accent-950: #4b0404;
+  --cl-blue-50: #eff6ff;
+  --cl-blue-100: #dbeafe;
+  --cl-blue-200: #bfdbfe;
+  --cl-blue-300: #93c5fd;
+  --cl-blue-400: #60a5fa;
+  --cl-blue-500: #3b82f6;
+  --cl-blue-600: #2563eb;
+  --cl-blue-700: #1d4ed8;
+  --cl-blue-800: #1e40af;
+  --cl-blue-900: #1e3a8a;
+  --cl-blue-950: #172554;
+
+  --cl-red-50: #fff1f1;
+  --cl-red-100: #ffdfdf;
+  --cl-red-200: #ffc5c5;
+  --cl-red-300: #ff9d9d;
+  --cl-red-400: #ff6464;
+  --cl-red-500: #ff3232;
+  --cl-red-600: #ed1515;
+  --cl-red-700: #c80d0d;
+  --cl-red-800: #a50f0f;
+  --cl-red-900: #881414;
+  --cl-red-950: #4b0404;
 
   --gradient-deg: 180deg;
   --cl-gradient: linear-gradient(
@@ -109,6 +133,9 @@
   --mobile-menu-start-point: 1200;
 
   --vh: calc(100vh / 100);
+
+  --main-shadow: rgba(0, 0, 0, 0.08) 0px 4px 6px -1px, rgba(0, 0, 0, 0.04) 0px 2px 4px -1px;
+  --main-shadow-top: rgba(0, 0, 0, 0.04) 0px -4px 6px -1px, rgba(0, 0, 0, 0.02) 0px -2px 4px -1px;
 
   --cart-width: 160px;
 

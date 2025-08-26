@@ -732,7 +732,7 @@
         justify-content: center;
         align-items: center;
         font-size: 16px;
-        color: var(--cl-accent-500);
+        color: var(--cl-red-500);
         transition: 0.3s;
         cursor: pointer;
 
@@ -962,7 +962,7 @@
     }
 
     .line {
-      stroke: var(--cl-accent-500);
+      stroke: var(--cl-red-500);
       opacity: 1;
     }
   }
@@ -1094,7 +1094,7 @@
     font-weight: 600;
     min-width: 15.6px;
     min-height: 15.6px;
-    background: var(--cl-accent-500);
+    background: var(--cl-red-500);
     color: var(--cl-neutral-50);
   }
 

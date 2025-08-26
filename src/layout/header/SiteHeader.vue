@@ -6,6 +6,12 @@ import { ref, onMounted, onBeforeUnmount, watch } from 'vue';
 import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
 import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
 import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import { useCartOpenStore } from '@/stores/cartState.store.js';
+const cartOpenStore = useCartOpenStore();
+
+function toggleCartFunc() {
+  cartOpenStore.toggleCart();
+}
 
 // refs для элементов, которые в шаблоне
 const headerRef = ref(null);
@@ -245,8 +251,8 @@ onBeforeUnmount(() => {
         </nav>
 
         <div class="header__additional">
-          <IconBtn size="small" additional-class="cart-open-mob hidden">
-            <i class="icon-search"></i>
+          <IconBtn size="small" additional-class="cart-open-mob hidden" @click="toggleCartFunc">
+            <i class="icon-cart-second"></i>
           </IconBtn>
 
           <a href="#" class="header__profile">
@@ -257,10 +263,6 @@ onBeforeUnmount(() => {
               </picture>
             </span>
           </a>
-
-          <IconBtn size="small" additional-class="cart-open-mob hidden">
-            <i class="icon-cart-second"></i>
-          </IconBtn>
         </div>
 
         <div class="burger menu-toggle" ref="menuToggleRef" @click="toggleMenu">
@@ -313,7 +315,7 @@ onBeforeUnmount(() => {
             <div class="header-mobile__link-text">Профіль</div>
           </a>
 
-          <button class="header-mobile__link cart-open-mob-second" @click="$emit('openCart')">
+          <button class="header-mobile__link cart-open-mob-second" @click="toggleCartFunc">
             <span class="header-mobile__link-icon">
               <i class="icon-cart-second"></i>
               <span class="header-mobile__link-count">10</span>

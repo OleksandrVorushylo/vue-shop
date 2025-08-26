@@ -51,7 +51,7 @@ body {
   left: 0 !important;
 }
 
-#site {
+#app {
   position: relative;
   flex-grow: 1;
   display: flex;
@@ -181,6 +181,46 @@ header {
     img,
     svg {
       position: absolute !important;
+    }
+  }
+}
+
+#app {
+  &.full-container-type {
+    @media (min-width: 902px) {
+      .cart-container {
+        display: none;
+      }
+
+      .sections-container {
+        max-width: 100%;
+      }
+
+      .cont {
+        margin: 0 auto;
+        max-width: 1296px;
+        width: perc(1296);
+      }
+
+      .header,
+      .footer {
+        max-width: 100%;
+      }
+
+      .footer {
+        &__top-container {
+          width: 100%;
+        }
+
+        &__content {
+          max-width: 392px;
+        }
+
+        &__info {
+          max-width: 670px;
+          margin-left: auto;
+        }
+      }
     }
   }
 }
