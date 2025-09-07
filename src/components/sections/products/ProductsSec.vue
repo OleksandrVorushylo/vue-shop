@@ -69,7 +69,7 @@ function handleFavorite(product) {
 }
 
 const recommendedProducts = computed(() =>
-  store.filteredProducts.filter((item) => item.isRecommended === true),
+  store.products.filter((item) => item.isRecommended === true),
 );
 
 onMounted(async () => {
