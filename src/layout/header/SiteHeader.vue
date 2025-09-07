@@ -179,14 +179,15 @@ onBeforeUnmount(() => {
             <div
               class="menu__item menu-dropdown"
               v-for="(item, index) in [
-                {
-                  title: 'Продукція',
-                  submenu: [
-                    { name: 'Lorem Ipsum 1', link: '/products/1' },
-                    { name: 'Lorem Ipsum 2', link: '/products/2' },
-                  ],
-                  link: '/products',
-                },
+                // {
+                //   title: 'Продукція',
+                //   submenu: [
+                //     { name: 'Lorem Ipsum 1', link: '/products/1' },
+                //     { name: 'Lorem Ipsum 2', link: '/products/2' },
+                //   ],
+                //   link: '/products',
+                // },
+                { title: 'Продукція', link: '/products' },
                 { title: 'Доставка', link: '/delivery' },
                 { title: 'Акція тижня', link: '/on-sale' },
                 { title: 'Контакти', link: '/contacts' },
@@ -233,7 +234,11 @@ onBeforeUnmount(() => {
         </nav>
 
         <div class="header__additional">
-          <IconBtn size="small" additional-class="cart-open-mob hidden" @click="toggleCartFunc">
+          <IconBtn
+            size="small"
+            additional-class="cart-open-mob hidden min-[902px]:!hidden"
+            @click="toggleCartFunc"
+          >
             <i class="icon-cart-second"></i>
           </IconBtn>
 

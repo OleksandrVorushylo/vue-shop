@@ -114,6 +114,8 @@
   &__wrap {
     padding: 8px 0;
     transition: all 0.3s ease-in-out;
+    position: relative;
+    z-index: 5;
   }
 
   &.fixed {
@@ -138,7 +140,7 @@
     height: 1px;
     background: var(--cl-secondary-300);
     content: '';
-    z-index: 5;
+    z-index: 1;
     transition: 0.3s;
   }
 
@@ -214,7 +216,7 @@
     &:hover {
       img,
       svg {
-        transform: scale(1.04);
+        transform: scale(0.9);
       }
     }
 
@@ -224,7 +226,7 @@
       height: 100%;
       object-fit: contain;
       object-position: left;
-      transition: transform 0.25s ease;
+      transition: transform 0.3s;
     }
   }
 
