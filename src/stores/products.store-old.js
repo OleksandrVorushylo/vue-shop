@@ -37,7 +37,6 @@ export const useProductsStore = defineStore('products', {
         });
       }
 
-      // Сортировка
       switch (state.filters.sortBy) {
         case 'name':
           temp.sort((a, b) => a.name.localeCompare(b.name));

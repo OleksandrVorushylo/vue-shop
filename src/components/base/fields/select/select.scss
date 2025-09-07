@@ -1,0 +1,130 @@
+.project-select {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  position: relative;
+  --height: #{ac(52px, 44px)};
+  --font-size: 14px;
+
+  label {
+    position: absolute;
+    top: 0;
+    transform: translateY(-50%);
+    font-size: 13px;
+    left: 16px;
+    z-index: 11;
+
+    &:before {
+      position: absolute;
+      left: -6px;
+      right: -6px;
+      top: -4px;
+      bottom: -4px;
+      background: var(--cl-white);
+      z-index: -1;
+      content: '';
+    }
+
+    @media (max-width: 1050px) {
+      @media (min-width: 769px) {
+        font-size: 10px;
+        letter-spacing: -0.02em;
+        white-space: nowrap;
+      }
+    }
+  }
+
+  select {
+    opacity: 0;
+    height: var(--height);
+  }
+
+  .multiselect {
+    --py: 6px;
+    --fz: var(--font-size);
+    font-size: var(--fz);
+    line-height: 1.2;
+    font-weight: 500;
+    font-family: var(--font-main);
+    color: var(--cl-neutral-700);
+
+    &__tags {
+      border: 1px solid var(--cl-neutral-300);
+      border-radius: 8px;
+      outline: none;
+      background: var(--cl-white);
+      cursor: pointer;
+      height: var(--height);
+      min-height: var(--height);
+      padding-top: var(--py);
+      padding-bottom: var(--py);
+      padding-left: 16px;
+    }
+
+    &__select {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: var(--height);
+      min-height: var(--height);
+      cursor: pointer;
+
+      &:before {
+        border: none;
+        border-bottom: 1px solid var(--cl-neutral-900);
+        border-right: 1px solid var(--cl-neutral-900);
+        content: '';
+        display: block;
+        height: 5px;
+        margin-top: -4px;
+        pointer-events: none;
+        position: absolute;
+        right: ac(25px, 18px);
+        top: 50%;
+        transform-origin: 66% 66%;
+        transform: rotate(45deg) scale(1.5);
+        transition: all 0.15s ease-in-out;
+        width: 5px;
+      }
+    }
+
+    &__single,
+    &__placeholder {
+      display: inline-flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 0;
+      margin: 0;
+      height: calc(var(--height) - (var(--py) * 2));
+      font-size: var(--fz);
+      line-height: 1.2;
+      font-weight: 500;
+      font-family: var(--font-main);
+      color: var(--cl-neutral-700);
+    }
+
+    &__option {
+      &:after {
+        display: none;
+      }
+
+      &--highlight {
+        background: var(--cl-green-500);
+      }
+    }
+
+    &--active {
+      z-index: 10;
+      .multiselect {
+        &__select {
+          transform: none;
+
+          &:before {
+            transform: rotate(-135deg) scale(1.5);
+          }
+        }
+      }
+    }
+  }
+}

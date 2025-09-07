@@ -9,6 +9,60 @@
   margin: 0 auto;
   width: 100%;
 
+  .swiper-pagination {
+    position: relative !important;
+    inset: auto !important;
+    width: auto;
+    margin-top: auto;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    &.swiper-pagination-fraction {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 3px;
+      min-height: ac(44px, 40px);
+      margin-bottom: 0;
+
+      span {
+        text-align: center;
+        display: block;
+        min-width: 22px;
+
+        &:first-child {
+          text-align: right;
+        }
+
+        &:last-child {
+          text-align: left;
+        }
+      }
+    }
+
+    &:not(.swiper-pagination-fraction) {
+      .swiper-pagination-bullet {
+        width: 16px;
+        height: 20px;
+        /*background: transparent;*/
+        position: relative;
+        opacity: 1;
+
+        &:hover {
+          &:before,
+          &:after {
+            color: var(--cl-sky);
+          }
+        }
+
+        &.swiper-pagination-bullet-active {
+        }
+      }
+    }
+  }
+
   .swiper-scrollbar.swiper-scrollbar-horizontal {
     position: relative;
     width: auto;
@@ -74,6 +128,7 @@
     transition: 0.3s;
     background-color: transparent;
     margin-top: ac(40px, 32px);
+    user-select: none;
 
     &::after {
       display: none;

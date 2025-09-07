@@ -4,36 +4,66 @@ import SearchResult from '@/components/sections/search/SearchResult.vue';
 import SearchCategoriesList from '@/components/sections/search/SearchCategoriesList.vue';
 import BaseInput from '@/components/base/fields/input/BaseInput.vue';
 import { useProductsStore } from '@/stores/products.store.js';
-import { computed, onMounted, ref } from 'vue';
-import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import { computed, onMounted, ref, watch } from 'vue';
+import BaseSelect from '@/components/base/fields/select/BaseSelect.vue';
+import FollowingSidebar from '@/components/base/following-sidebar/FollowingSidebar.vue';
 
 const store = useProductsStore();
+const currentPage = ref(1);
+const itemsPerPage = 12;
 
 const searchInput = ref(null);
 const clearSearchBtn = ref(null);
 
+const sortOptions = [
+  { value: 'name', label: 'За назвою' },
+  { value: 'cheaper-price', label: 'За ціною (дешевше)' },
+  { value: 'expensive-price', label: 'За ціною (дорожче)' },
+];
+
 const clearSearchValue = () => {
   store.filters.searchQuery = '';
+  currentPage.value = 1;
 };
 
 const isClearButtonVisible = computed(() => store.filters.searchQuery.trim() !== '');
 
+const paginatedProducts = computed(() => {
+  const start = (currentPage.value - 1) * itemsPerPage;
+  const end = start + itemsPerPage;
+  return store.filteredProducts.slice(start, end);
+});
+
+const totalPages = computed(() => Math.ceil(store.filteredProducts.length / itemsPerPage));
+
 onMounted(async () => {
   await store.fetchProducts();
 });
+
+watch(
+  () => store.filters.searchQuery,
+  () => {
+    currentPage.value = 1;
+  },
+);
 </script>
 
 <template>
-  <div id="content-sticky" class="search-sec__container">
-    <aside id="sidebar" class="search-sec__sidebar sidebar">
-      <div class="following-sidebar-inner search-sec__sidebar-inner">
-        <div class="search-sec__categories">
-          <div class="title-3 search-sec__categories-title">Категорії товарів</div>
-          <SearchCategoriesList></SearchCategoriesList>
-        </div>
+  <FollowingSidebar
+    container-class="search-sec__container"
+    sidebar-class="search-sec__sidebar"
+    sidebar-inner-class="search-sec__sidebar-inner"
+    content-class="search-sec__result"
+    :gap-top="5"
+  >
+    <template #sidebar>
+      <div class="search-sec__categories">
+        <div class="title-3 search-sec__categories-title">Категорії товарів</div>
+        <SearchCategoriesList></SearchCategoriesList>
       </div>
-    </aside>
-    <div class="search-sec__result">
+    </template>
+
+    <template #content>
       <div class="search-sec__result-content">
         <h1 class="large-title-3 search-sec__title">Пошук товарів</h1>
         <form class="search-sec__form">
@@ -62,25 +92,29 @@ onMounted(async () => {
             </div>
           </div>
 
-          <div class="meta-select">
-            <label class="sr-only" for="city">Сортувати за...</label>
-            <select v-model="store.filters.sortBy" class="choices-select" id="city">
-              <option value="">Сортувати за...</option>
-              <option value="name">За назвою</option>
-              <option value="cheaper-price">За ціною (дешевше)</option>
-              <option value="expensive-price">За ціною (дорожче)</option>
-            </select>
-          </div>
+          <BaseSelect
+            select-id="sort-select"
+            :is-label-for-select="false"
+            v-model="store.filters.sortBy"
+            :options="sortOptions"
+            placeholder="Сортувати за..."
+            label="label"
+            track-by="value"
+            additional-class="search-sec__search-sort"
+          ></BaseSelect>
         </form>
       </div>
-      <SearchResult></SearchResult>
+
+      <SearchResult :products="paginatedProducts"></SearchResult>
+
       <BasePagination
-        :total-pages="3"
-        :current-page="1"
+        v-if="store.filteredProducts.length > itemsPerPage"
+        :total-pages="totalPages"
+        v-model:currentPage="currentPage"
         additionalClass="search-sec__result-pagination"
       ></BasePagination>
-    </div>
-  </div>
+    </template>
+  </FollowingSidebar>
 </template>
 
 <style scoped>

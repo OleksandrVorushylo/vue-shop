@@ -18,6 +18,9 @@ const cartOpenStore = useCartOpenStore();
 import { ref, onMounted, watch, computed } from 'vue';
 import CartItem from '@/components/cart/CartItem.vue';
 import ProductCard from '@/components/ui/product-card/ProductCard.vue';
+import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
+import LinkBtn from '@/components/base/buttons/link-button/linkBtn.vue';
+import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
 
 const cartComponent = ref(null);
 const cartOpenBtn = ref(null);
@@ -55,6 +58,14 @@ const scrollListCalc = () => {
 
   cartList.value.style.maxHeight = `calc(100% - ${offset}px)`;
   cartListContainer.value.style.minHeight = `${cartList.value.clientHeight}px`;
+
+  if (isOpen) {
+    setTimeout(() => {
+      cartList.value.classList.add('is-opened');
+    }, 200);
+  } else {
+    cartList.value.classList.remove('is-opened');
+  }
 };
 
 function enableScrollListFunc() {
@@ -146,6 +157,14 @@ onMounted(() => {
         <div v-mark-scrollable ref="cartList" class="cart__list">
           <div ref="cartOpenListBtn" @click="toggleCartFunc" class="cart__list-open-btn"></div>
           <div ref="cartListContainer" class="cart__list-container">
+            <div
+              v-if="cartStore.items.length === 0"
+              class="cart__not-products-container is-visible"
+            >
+              <div class="content-element cart__not-products-text">
+                <p>Замовлення зʼявиться тут</p>
+              </div>
+            </div>
             <div class="cart__prev-list">
               <div v-if="cartStore.items.length > 0" class="cart__prev-list-wrap">
                 <div v-for="item in cartStore.items" :key="item.id" class="cart__prev-item">
@@ -179,10 +198,6 @@ onMounted(() => {
                 :counter-value="cartStore.getQuantityById(String(item.id))"
               ></CartItem>
             </div>
-
-            <!--            <div class="w-full" v-else>
-              <p>Ваша корзина пуста.</p>
-            </div>-->
           </div>
         </div>
         <div ref="cartOpenBtn" class="cart__open-btn" @click="toggleCartFunc">
@@ -190,6 +205,17 @@ onMounted(() => {
           <div class="cart__open-btn-text">{{ cartOpenBtnText }}</div>
         </div>
         <div ref="cartVisibleBottom" class="cart__visible-bottom">
+          <div
+            class="cart__not-products-socials-not-open"
+            :class="cartStore.items.length === 0 ? 'is-visible' : ''"
+          >
+            <IconBtn href="" target="_blank" variant="social">
+              <i class="icon-instagram"></i>
+            </IconBtn>
+            <IconBtn href="" target="_blank" variant="social">
+              <i class="icon-telegram"></i>
+            </IconBtn>
+          </div>
           <div class="cart__first-result">
             <p class="cart__first-result-text">Сума</p>
             <div class="cart__result-sum">
@@ -200,6 +226,37 @@ onMounted(() => {
         </div>
         <div ref="cartResult" class="cart__result">
           <div class="cart__result-container">
+            <div
+              class="cart__not-products-contacts"
+              :class="cartStore.items.length === 0 ? 'is-visible' : ''"
+            >
+              <div class="cart__not-products-links">
+                <LinkBtn
+                  additional-class="cart__contact-link"
+                  href="tel:123"
+                  :icon="true"
+                  variant="reverse"
+                  icon-class="icon-phone"
+                  >+38 097 000 0000</LinkBtn
+                >
+                <LinkBtn
+                  additional-class="cart__contact-link"
+                  href="mailto:info@olivkamarket.com"
+                  :icon="true"
+                  variant="reverse"
+                  icon-class="icon-mail"
+                  >info@shop.com</LinkBtn
+                >
+              </div>
+              <ButtonsWrapper variant="socials" additional-class="cart__contact-socials">
+                <IconBtn href="" target="_blank" variant="social">
+                  <i class="icon-instagram"></i>
+                </IconBtn>
+                <IconBtn href="" target="_blank" variant="social">
+                  <i class="icon-telegram"></i>
+                </IconBtn>
+              </ButtonsWrapper>
+            </div>
             <div class="cart__result-content">
               <div class="cart__result-sum">
                 <span class="cart__result-sum-text">Сума</span>

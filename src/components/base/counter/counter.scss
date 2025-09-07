@@ -86,4 +86,24 @@
       border-color: var(--cl-primary-800);
     }
   }
+
+  &.big-size {
+    height: 42px;
+    width: 128px;
+
+    .counter-btn {
+      font-size: 10px;
+      $size: 41px;
+      width: $size;
+      height: $size;
+    }
+
+    input {
+      font-size: 16px;
+      line-height: 110%;
+      letter-spacing: 0;
+      width: 42px;
+      height: 41px;
+    }
+  }
 }

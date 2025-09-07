@@ -105,7 +105,7 @@ const withOrderPrefix = (baseClass) => {
         </div>
 
         <BaseCounter
-          id="product-1"
+          :id="`product-swiper-counter-${productId}`"
           variant="second"
           :additional-class="isOrderCartItem ? 'order-cart__item-counter' : 'cart__item-counter'"
           :productId="productId"

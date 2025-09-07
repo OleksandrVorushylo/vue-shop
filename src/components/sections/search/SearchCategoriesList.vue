@@ -1,6 +1,6 @@
 <script setup>
 import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
-import { ref, onMounted, watch, computed } from 'vue';
+import { ref, onMounted, watch, computed, inject } from 'vue';
 
 const props = defineProps({
   checked: {
@@ -17,6 +17,8 @@ const props = defineProps({
   },
 });
 
+const injectedCategory = inject('initialCategory', ref(null));
+
 import { useProductsStore } from '@/stores/products.store.js';
 
 const store = useProductsStore();
@@ -25,7 +27,17 @@ const allCheckbox = ref(null);
 
 onMounted(() => {
   store.fetchProducts();
-  if (!store.filters.selectedCategories.length) {
+  if (injectedCategory.value) {
+    store.filters.selectedCategories = [injectedCategory.value];
+  } else if (!store.filters.selectedCategories.length) {
+    store.filters.selectedCategories = ['all'];
+  }
+});
+
+watch(injectedCategory, (newVal) => {
+  if (newVal) {
+    store.filters.selectedCategories = [newVal];
+  } else {
     store.filters.selectedCategories = ['all'];
   }
 });

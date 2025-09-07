@@ -35,10 +35,8 @@ export const useCartStore = defineStore('cart', {
     addToCart(product) {
       const existingItem = this.items.find((item) => item.id === product.id);
       if (existingItem) {
-        // Если товар уже в корзине, просто увеличиваем количество
         existingItem.quantity += 1;
       } else {
-        // Если товара нет в корзине, добавляем его с количеством = 1
         this.items.push({
           ...product,
           id: String(product.id),
@@ -68,16 +66,32 @@ export const useCartStore = defineStore('cart', {
       this.persist();
     },
 
-    // Очистка корзины
+    setQuantity(productId, quantity, productData = null) {
+      const existingItem = this.items.find((item) => String(item.id) === String(productId));
+
+      if (existingItem) {
+        if (quantity <= 0) {
+          this.removeFromCart(productId);
+        } else {
+          existingItem.quantity = quantity;
+        }
+      } else if (quantity > 0 && productData) {
+        this.items.push({
+          ...productData,
+          id: String(productId),
+          quantity,
+        });
+      }
+      this.persist();
+    },
+
     clearCart() {
       this.items = [];
       this.persist();
     },
 
-    createOrder() {
-      if (this.items.length === 0) {
-        return null;
-      }
+    createOrder(formData) {
+      if (this.items.length === 0) return null;
 
       const orderItems = this.items.map((item) => ({
         id: item.id,
@@ -95,10 +109,10 @@ export const useCartStore = defineStore('cart', {
         items: orderItems,
         totalQuantity: this.totalQuantity,
         totalPrice: this.totalPrice,
+        customer: formData,
       };
 
       this.clearCart();
-
       return order;
     },
   },

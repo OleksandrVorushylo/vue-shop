@@ -13,7 +13,6 @@ function toggleCartFunc() {
   cartOpenStore.toggleCart();
 }
 
-// refs для элементов, которые в шаблоне
 const headerRef = ref(null);
 const headerMobileRef = ref(null);
 const topHeaderRef = ref(null);
@@ -23,7 +22,6 @@ const menuToggleMobRef = ref(null);
 const menuCloseMobRef = ref(null);
 const languageDropdownRef = ref(null);
 
-// Состояния
 const scrolled = ref(false);
 const openMenu = ref(false);
 const activeDropdownIndex = ref(null);
@@ -31,31 +29,24 @@ const mobileMenuStartPoint = parseInt(
   getComputedStyle(document.documentElement).getPropertyValue('--mobile-menu-start-point'),
 );
 
-// Проверка на мобайл меню
 const isMobileMenuEnable = ref(window.outerWidth <= mobileMenuStartPoint);
 
-// Обработчик скролла для добавления классов scrolled
 function onScroll() {
   const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
   scrolled.value = scrollTop > 50;
-  // Можно тут же управлять стилями, либо через классы в шаблоне
 }
 
-// Обработчик переключения меню (бургер)
 function toggleMenu() {
   openMenu.value = !openMenu.value;
   updatePositionMobileNav();
-  // Тут можно добавить логику scrollLock, если нужно
 }
 
-// Обновить позицию моб меню CSS переменной
 function updatePositionMobileNav() {
   if (!headerRef.value) return;
   const topNavValue = `${headerRef.value.clientHeight}px`;
   document.documentElement.style.setProperty('--top-nav', topNavValue);
 }
 
-// Обновить меню при ресайзе
 function updateMenu() {
   isMobileMenuEnable.value = window.outerWidth <= mobileMenuStartPoint;
 
@@ -66,19 +57,16 @@ function updateMenu() {
   updatePositionMobileNav();
 }
 
-// Dropdown open/close по индексу
 function toggleDropdown(index) {
   activeDropdownIndex.value = activeDropdownIndex.value === index ? null : index;
 }
 
-// Хэндлер клика по языковому дропдауну для мобилки
 function toggleLanguageDropdown() {
   if (window.innerWidth <= 1024 && languageDropdownRef.value) {
     languageDropdownRef.value.classList.toggle('active');
   }
 }
 
-// Закрыть дропдаун, если клик вне его
 function onDocumentClick(e) {
   if (
     window.innerWidth <= 1024 &&
@@ -89,7 +77,6 @@ function onDocumentClick(e) {
   }
 }
 
-// Sticky header logic — плавное скрытие/появление при скролле вверх/вниз
 let prevScrollPos = window.pageYOffset;
 function stickyScrollHandler() {
   if (!headerRef.value || !headerMobileRef.value) return;
@@ -102,7 +89,6 @@ function stickyScrollHandler() {
 
   if (window.scrollY > 0) {
     if (prevScrollPos > currentScrollPos) {
-      // Скролл вверх
       headerRef.value.style.top = '0';
       headerMobileRef.value.style.bottom = '0';
       scrolled.value = true;
@@ -111,7 +97,6 @@ function stickyScrollHandler() {
         stickyBtn.style.transform = 'translateY(0)';
       }
     } else {
-      // Скролл вниз
       headerRef.value.style.top = `-${headerHeight + 3}px`;
       headerMobileRef.value.style.bottom = `-${headerMobileHeight + 3}px`;
       if (stickyBtn) {
@@ -180,10 +165,7 @@ onBeforeUnmount(() => {
     <div class="cont">
       <div class="header__wrap">
         <RouterLink to="/" class="logo">
-          <picture>
-            <source srcset="/images/logo-header.webp" type="image/webp" />
-            <img src="/images/logo-header.webp" alt="Logo" />
-          </picture>
+          <img src="/images/logo-coffee-tea.svg" alt="Logo" />
         </RouterLink>
 
         <nav class="header__navbar navbar-nav nav-slide-left" :class="{ active: openMenu }">
@@ -301,12 +283,9 @@ onBeforeUnmount(() => {
             <div class="header-mobile__link-text">Пошук</div>
           </a>
         </div>
-        <a href="#" class="header-mobile__logo">
-          <picture>
-            <source srcset="/images/logo-header.webp" type="image/webp" />
-            <img src="/images/logo-header.webp" alt="Logo" />
-          </picture>
-        </a>
+        <RouterLink to="/" class="header-mobile__logo">
+          <img src="/images/logo-coffee-tea.svg" alt="Logo" />
+        </RouterLink>
         <div class="header-mobile__links">
           <a href="#" class="header-mobile__link">
             <div class="header-mobile__link-icon">

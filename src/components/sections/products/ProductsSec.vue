@@ -16,8 +16,11 @@ import { computed, onMounted, ref } from 'vue';
 import { useProductsStore } from '@/stores/products.store.js';
 import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
 import ButtonsWrapper from '@/components/base/buttons/ButtonsWrapper.vue';
+import { useCartStore } from '@/stores/cart.store.js';
 
 const store = useProductsStore();
+
+const cartStore = useCartStore();
 
 const scrollbarSwiperEl = ref(null);
 const prevSwiperEl = ref(null);
@@ -49,6 +52,17 @@ const swiperOptions = ref({
 });
 
 const convertToBoolean = (value) => value === 'true';
+
+const removeFromCart = (productId) => {
+  cartStore.removeFromCart(productId);
+};
+
+const isInCart = (productId) =>
+  cartStore.items.some((item) => String(item.id) === String(productId));
+
+const addToCart = (product) => {
+  cartStore.addToCart(product);
+};
 
 function handleFavorite(product) {
   store.toggleFavorite(product.id);
@@ -82,8 +96,10 @@ onMounted(() => {
           <Swiper ref="swiperRef" v-bind="swiperOptions">
             <SwiperSlide v-for="item in recommendedProducts" :key="item.id">
               <ProductCard
+                :slug="item.slug"
+                :productId="item.id"
                 :image-url="item.photoUrl"
-                :image-webp="item.photoWepb"
+                :image-webp="item.photoWebp"
                 :title="item.name"
                 :info="item.description"
                 :price="Number(item.price)"
@@ -91,6 +107,9 @@ onMounted(() => {
                 :newPrice="Number(item.newPrice)"
                 :is-favorite="item.isFavorite"
                 :on-click-favorite="() => handleFavorite(item)"
+                :on-click-add="() => addToCart(item)"
+                :is-added="cartStore.cartIds.includes(String(item.id))"
+                :counter-value="cartStore.getQuantityById(String(item.id))"
               ></ProductCard>
             </SwiperSlide>
           </Swiper>

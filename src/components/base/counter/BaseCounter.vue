@@ -34,6 +34,10 @@ const props = defineProps({
     type: String,
     default: '', // second
   },
+  size: {
+    type: String,
+    default: '', // big
+  },
   productId: {
     type: String,
   },
@@ -85,6 +89,7 @@ watch(
 
 const counterClass = computed(() => [
   props.variant === 'second' ? 'counter-second' : '',
+  props.size === 'big' ? 'big-size' : '',
   props.additionalClass,
 ]);
 </script>

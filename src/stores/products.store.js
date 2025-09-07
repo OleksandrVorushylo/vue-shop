@@ -35,6 +35,8 @@ export const useProductsStore = defineStore('products', {
       }
 
       switch (state.filters.sortBy) {
+        case 'all':
+          break;
         case 'name':
           temp.sort((a, b) => (a.name || '').localeCompare(b.name || ''));
           break;
@@ -168,6 +170,9 @@ export const useProductsStore = defineStore('products', {
     },
     setSortBy(value) {
       this.filters.sortBy = value;
+    },
+    getProductBySlug(slug) {
+      return this.products.find((product) => product.slug === slug);
     },
   },
 });

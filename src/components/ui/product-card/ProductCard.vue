@@ -7,6 +7,10 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
 import BaseCounter from '@/components/base/counter/BaseCounter.vue';
 
 const props = defineProps({
+  slug: {
+    type: String,
+    required: true,
+  },
   imageUrl: {
     type: String,
   },
@@ -68,7 +72,7 @@ const productCount = ref(0);
 
 <template>
   <div ref="card" class="product-card" :class="isAdded ? 'is-open-counter' : ''">
-    <a href="#" class="product-card__link"></a>
+    <RouterLink :to="`/product/${slug}`" class="product-card__link"></RouterLink>
     <div class="product-card__image-container">
       <div class="image-aspect-ratio product-card__image">
         <picture>
@@ -95,7 +99,6 @@ const productCount = ref(0);
       <div class="content-element product-card__text">
         {{ info }}
       </div>
-      {{ productId }}
       <slot></slot>
       <div class="product-card__bottom">
         <div class="product-card__info">
@@ -111,7 +114,7 @@ const productCount = ref(0);
         </div>
         <div ref="counterBlock" class="product-card__btn-counter" :class="isAdded ? 'active' : ''">
           <BaseCounter
-            id="product-swiper-counter-1"
+            :id="`product-swiper-counter-${productId}`"
             additionalClass="product-card__counter"
             :productId="productId"
             :value="counterValue"

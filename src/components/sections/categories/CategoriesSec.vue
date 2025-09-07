@@ -24,6 +24,7 @@ const limitedCategories = computed(() => {
             <CategoriesItem
               v-for="item in limitedCategories"
               :key="item.id"
+              :id="item.id"
               :title="item.name"
               imageUrl="/images/categories-img-10.jpg"
               imageWebp="/images/categories-img-10.webp"

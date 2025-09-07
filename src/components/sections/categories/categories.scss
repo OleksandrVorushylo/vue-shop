@@ -46,16 +46,18 @@
     width: calc(25% - 12px);
     position: relative;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /*justify-content: center;
+    align-items: center;*/
+    align-items: stretch;
+    justify-content: stretch;
     border-radius: ac(16px, 8px);
     overflow: hidden;
     cursor: pointer;
     transition: box-shadow 0.3s;
     z-index: 5;
-    padding: ac(16px, 10px);
+    /*padding: ac(16px, 10px);*/
     color: var(--cl-neutral-50);
-    min-height: ac(185px, 150px);
+    /*min-height: ac(185px, 150px);*/
 
     &:before {
       position: absolute;
@@ -85,7 +87,14 @@
       }
     }
 
-    &.aura-container {
+    .aura-container {
+      flex: 1;
+      padding: ac(16px, 10px);
+      min-height: ac(185px, 150px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
       .cursor-aura {
         @include aspect-ratio(1, 1);
         width: 135.25%;

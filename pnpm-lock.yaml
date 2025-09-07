@@ -26,6 +26,9 @@ importers:
       firebase:
         specifier: ^12.1.0
         version: 12.1.0
+      float-sidebar:
+        specifier: ^1.2.5
+        version: 1.2.5
       maska:
         specifier: ^3.2.0
         version: 3.2.0
@@ -56,6 +59,9 @@ importers:
       vue-i18n:
         specifier: '11'
         version: 11.1.11(vue@3.5.18(typescript@5.9.2))
+      vue-multiselect:
+        specifier: ^3.3.1
+        version: 3.3.1
       vue-router:
         specifier: '4'
         version: 4.5.1(vue@3.5.18(typescript@5.9.2))
@@ -2382,6 +2388,9 @@ packages:
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
 
+  float-sidebar@1.2.5:
+    resolution: {integrity: sha512-qdrMHRZYGbCf5Le8qDhxXRZNDS5p5xjs/MbCvLHDV138mfJrZfDfQns+xExls/Kbic+oVEiVv9iVvMmIgMNkoA==}
+
   follow-redirects@1.15.11:
     resolution: {integrity: sha512-deG2P0JfjrTxl50XGCDyfI97ZGVCxIpfKYmfyrQ54n5FO/0gfIES8C/Psl6kWVDolizcaaxZJnTS0QSMxvnsBQ==}
     engines: {node: '>=4.0'}
@@ -4091,6 +4100,10 @@ packages:
     engines: {node: '>= 16'}
     peerDependencies:
       vue: ^3.0.0
+
+  vue-multiselect@3.3.1:
+    resolution: {integrity: sha512-QZPxG60HK4HCeBNq4rkpzHSzh3ow8blipZbKmYdRvN65If/aFWO/Bzz6eUCED4LQNYlvXG7UJuiFlbqFkAeKXg==}
+    engines: {node: '>= 14.18.1', npm: '>= 6.14.15'}
 
   vue-router@4.5.1:
     resolution: {integrity: sha512-ogAF3P97NPm8fJsE4by9dwSYtDwXIY1nFY9T6DyQnGHd1E2Da94w9JIolpe42LJGIl0DwOHBi8TcRPlPGwbTtw==}
@@ -6642,6 +6655,8 @@ snapshots:
 
   flatted@3.3.3: {}
 
+  float-sidebar@1.2.5: {}
+
   follow-redirects@1.15.11: {}
 
   for-each@0.3.5:
@@ -8298,6 +8313,8 @@ snapshots:
       '@intlify/shared': 11.1.11
       '@vue/devtools-api': 6.6.4
       vue: 3.5.18(typescript@5.9.2)
+
+  vue-multiselect@3.3.1: {}
 
   vue-router@4.5.1(vue@3.5.18(typescript@5.9.2)):
     dependencies:

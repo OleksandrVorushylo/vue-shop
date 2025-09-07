@@ -10,12 +10,9 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
       <div class="footer__wrap">
         <div class="footer__top-container">
           <div class="footer__content">
-            <a href="#" class="footer__logo">
-              <picture>
-                <source srcset="/images/logo-footer.png?as=webp" type="image/webp" />
-                <img loading="lazy" src="/images/logo-footer.png" alt="Logo" />
-              </picture>
-            </a>
+            <RouterLink to="/" class="footer__logo">
+              <img loading="lazy" src="/images/logo-coffee-tea-light.svg" alt="Logo" />
+            </RouterLink>
             <div class="content-element body-text-18 footer__content-text">
               <p>Ми відбираємо найкращі плоди, щоб подарувати вам справжнє задоволення.</p>
             </div>

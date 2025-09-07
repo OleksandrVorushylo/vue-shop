@@ -2,6 +2,8 @@
 import './order.scss';
 import OrderCart from '@/components/order-cart/OrderCart.vue';
 import { useScrollLockStore } from '@/stores/scrollLock.store.js';
+import { useCartStore } from '@/stores/cart.store.js';
+import { useOrdersStore } from '@/stores/orders.store.js';
 import BaseInput from '@/components/base/fields/input/BaseInput.vue';
 import BaseRadio from '@/components/base/fields/checkbox-radio/BaseRadio.vue';
 import axios from 'axios';
@@ -26,9 +28,25 @@ provide('formControl', {
   },
 });
 
-const handleSubmit = (payload) => {
+const cartStore = useCartStore();
+const ordersStore = useOrdersStore();
+
+const handleSubmit = async (payload) => {
   console.log('Получены данные из формы:', payload);
-  // Здесь можете добавить логику отправки на сервер
+
+  const order = cartStore.createOrder(payload);
+
+  if (!order) {
+    console.warn('Корзина пуста');
+    return;
+  }
+
+  try {
+    const orderId = await ordersStore.sendOrder(order);
+    console.log('Заказ отправлен с id:', orderId);
+  } catch (err) {
+    console.error('Ошибка при отправке заказа:', err);
+  }
 };
 </script>
 

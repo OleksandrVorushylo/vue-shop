@@ -1,20 +1,11 @@
 <script setup>
 import './pagination.scss';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 
 const props = defineProps({
-  additionalClass: {
-    type: String,
-    default: '',
-  },
-  totalPages: {
-    type: Number,
-    required: true,
-  },
-  currentPage: {
-    type: Number,
-    default: 1,
-  },
+  additionalClass: { type: String, default: '' },
+  totalPages: { type: Number, required: true },
+  currentPage: { type: Number, default: 1 },
 });
 
 const emit = defineEmits(['update:currentPage']);
@@ -31,23 +22,29 @@ const isNextDisabled = computed(() => props.currentPage === props.totalPages);
 const visiblePages = computed(() => {
   const total = props.totalPages;
   const current = props.currentPage;
-  const range = [];
+  const pages = [];
 
-  if (total <= 5) {
-    for (let i = 1; i <= total; i++) {
-      range.push(i);
-    }
+  if (total <= 7) {
+    for (let i = 1; i <= total; i++) pages.push(i);
   } else {
+    pages.push(1);
+
     if (current <= 3) {
-      range.push(1, 2, 3, 4, '...');
+      pages.push(2, 3);
+      pages.push('...');
     } else if (current >= total - 2) {
-      range.push('...', total - 3, total - 2, total - 1, total);
+      pages.push('...');
+      pages.push(total - 2, total - 1);
     } else {
-      range.push('...', current - 1, current, current + 1, '...');
+      pages.push('...');
+      pages.push(current - 1, current, current + 1);
+      pages.push('...');
     }
+
+    pages.push(total);
   }
 
-  return range;
+  return pages;
 });
 </script>
 
@@ -62,8 +59,8 @@ const visiblePages = computed(() => {
     </li>
 
     <li
-      v-for="page in visiblePages"
-      :key="page"
+      v-for="(page, index) in visiblePages"
+      :key="page + '-' + index"
       :class="{
         'pagination-num': true,
         active: page === props.currentPage,

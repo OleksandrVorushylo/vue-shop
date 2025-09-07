@@ -1,5 +1,5 @@
 .search-sec {
-  margin-top: var(--top-nav, 96px);
+  padding-top: var(--top-nav, 96px);
   --text-color: var(--cl-neutral-900);
   --title-color: var(--cl-neutral-900);
   background: var(--cl-secondary-25);
@@ -357,6 +357,13 @@
 
     &:hover {
       color: var(--cl-secondary-500);
+    }
+  }
+
+  &__search-sort {
+    &.project-select {
+      --height: 48px;
+      --font-size: #{ac(15px, 14px)};
     }
   }
 
