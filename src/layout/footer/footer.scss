@@ -333,10 +333,6 @@
     img {
       object-fit: contain;
     }
-
-    @media (min-width: 1439px) {
-      margin-left: 78px;
-    }
   }
 
   &__bottom-dev {
@@ -420,7 +416,7 @@
       }
 
       &__bottom-info {
-        max-width: 406px;
+        max-width: 546px;
       }
     }
   }

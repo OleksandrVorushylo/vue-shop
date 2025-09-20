@@ -14,7 +14,9 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
               <img loading="lazy" src="/images/logo-coffee-tea-light.svg" alt="Logo" />
             </RouterLink>
             <div class="content-element body-text-18 footer__content-text">
-              <p>Ми відбираємо найкращі плоди, щоб подарувати вам справжнє задоволення.</p>
+              <p>
+                Ми обираємо найсмачніші сорти чаю та кави, щоб кожна чашка дарувала тепло і затишок.
+              </p>
             </div>
             <div class="footer__socials">
               <ButtonsWrapper variant="socials" additional-class="footer__socials-links">
@@ -54,11 +56,11 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
                     <span class="footer__contact-text">+38 097 000 0000</span>
                   </a>
 
-                  <a href="mailto:info@olivkamarket.com" class="footer__contact-link">
+                  <a href="mailto:info@vueshop.com" class="footer__contact-link">
                     <span class="icon-svg footer__contact-icon">
                       <i class="icon-mail"></i>
                     </span>
-                    <span class="footer__contact-text">info@olivkamarket.com</span>
+                    <span class="footer__contact-text">info@vueshop.com</span>
                   </a>
                 </div>
               </div>
@@ -76,7 +78,7 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
                     <span class="icon-svg footer__contact-icon">
                       <i class="icon-location"></i>
                     </span>
-                    <span class="footer__contact-text">Брюховичі вул. Сухомлинського 1</span>
+                    <span class="footer__contact-text">м. Чернігів, вул. Незалежності 23</span>
                   </a>
 
                   <div class="footer__contact-link !pointer-events-none">
@@ -94,7 +96,7 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
           <div class="footer__bottom-info">
             <div class="footer__bottom-info-text">
               <p>
-                © 2025. Магазин "Оливка".<br class="sm:!hidden" />
+                © 2025. Магазин "Coffee & Tea".<br class="sm:!hidden" />
                 Всі права застережено
               </p>
             </div>

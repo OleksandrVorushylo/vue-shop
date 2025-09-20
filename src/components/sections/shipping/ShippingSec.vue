@@ -1,22 +1,21 @@
 <script setup>
-import './shipping.scss'
+import { Swiper, SwiperSlide } from 'swiper/vue';
 
-import { Swiper, SwiperSlide } from 'swiper/vue'
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/scrollbar';
+import 'swiper/css/autoplay';
+import '../../plugins/swiper/swiper.scss';
 
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/scrollbar'
-import 'swiper/css/autoplay'
+import './shipping.scss';
 
-import '../../plugins/swiper/swiper.scss'
+import { Navigation, Scrollbar, Autoplay } from 'swiper/modules';
+import { onMounted, ref } from 'vue';
 
-import { Navigation, Scrollbar, Autoplay } from 'swiper/modules'
-import { onMounted, ref } from 'vue'
-
-const scrollbarSwiperEl = ref(null)
-const prevSwiperEl = ref(null)
-const nextSwiperEl = ref(null)
-const swiperRef = ref(null)
+const scrollbarSwiperEl = ref(null);
+const prevSwiperEl = ref(null);
+const nextSwiperEl = ref(null);
+const swiperRef = ref(null);
 
 const swiperOptions = ref({
   modules: [Autoplay, Navigation, Scrollbar],
@@ -36,11 +35,11 @@ const swiperOptions = ref({
   },
   breakpoints: {
     552: {
-      spaceBetween: 16,
+      spaceBetween: 20,
       slidesPerView: 2,
     },
     1024: {
-      spaceBetween: 16,
+      spaceBetween: 20,
       slidesPerView: 3,
     },
   },
@@ -49,13 +48,13 @@ const swiperOptions = ref({
     disableOnInteraction: false,
     pauseOnMouseEnter: window.innerWidth >= 640,
   },
-})
+});
 
 onMounted(() => {
-  swiperOptions.value.navigation.nextEl = nextSwiperEl.value
-  swiperOptions.value.navigation.prevEl = prevSwiperEl.value
-  swiperOptions.value.scrollbar.el = scrollbarSwiperEl.value
-})
+  swiperOptions.value.navigation.nextEl = nextSwiperEl.value;
+  swiperOptions.value.navigation.prevEl = prevSwiperEl.value;
+  swiperOptions.value.scrollbar.el = scrollbarSwiperEl.value;
+});
 </script>
 
 <template>
@@ -65,37 +64,37 @@ onMounted(() => {
         <div class="shipping-sec__slider shipping-swiper-wr">
           <Swiper ref="swiperRef" v-bind="swiperOptions">
             <SwiperSlide class="shipping-sec__item">
-              <div class="shipping-sec__item-title">Брюховичі</div>
+              <div class="shipping-sec__item-title">Масани (мікрорайон)</div>
               <div class="shipping-sec__item-content">
                 <div class="content-element body-text-16 shipping-sec__item-text">
                   <p>
-                    Доставка працює<br />
+                    Безкоштовна доставка<br />
                     від суми замовлення
                   </p>
                 </div>
-                <div class="shipping-sec__item-sum body-text-18">800 грн</div>
+                <div class="shipping-sec__item-sum body-text-18">300 грн</div>
               </div>
             </SwiperSlide>
 
             <SwiperSlide class="shipping-sec__item">
-              <div class="shipping-sec__item-title">Бірки, Ясниська, Рокитне, Воля-Гомулецька</div>
+              <div class="shipping-sec__item-title">Інші райони Чернігова</div>
               <div class="shipping-sec__item-content">
                 <div class="content-element body-text-16 shipping-sec__item-text">
                   <p>
-                    Доставка працює<br />
-                    від суми замовлення
+                    Безкоштовно від <span class="whitespace-nowrap">1 000 грн</span>, інакше
+                    <span class="whitespace-nowrap">100 грн</span>
                   </p>
                 </div>
-                <div class="shipping-sec__item-sum body-text-18">1 000 грн</div>
+                <div class="shipping-sec__item-sum body-text-18">100 грн</div>
               </div>
             </SwiperSlide>
 
             <SwiperSlide class="shipping-sec__item">
-              <div class="shipping-sec__item-title">Район Чорновола</div>
+              <div class="shipping-sec__item-title">За містом / передмістя</div>
               <div class="shipping-sec__item-content">
                 <div class="content-element body-text-16 shipping-sec__item-text">
                   <p>
-                    Доставка працює<br />
+                    Доставка за межі міста<br />
                     від суми замовлення
                   </p>
                 </div>

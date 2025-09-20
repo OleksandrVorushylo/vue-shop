@@ -23,10 +23,10 @@ onMounted(async () => {
     <div class="cont">
       <div class="on-sale-sec__wrap">
         <h1 class="on-sale-sec__subtitle">Знижки</h1>
-        <h2 class="large-title-2 on-sale-sec__title">Акція тижня</h2>
+        <h2 class="large-title-2 on-sale-sec__title">Акційні пропозиції</h2>
         <div class="content-element body-text-18 on-sale-sec__text">
           <p>
-            Не потрібно шукати улюблені продукти<br />
+            Не потрібно шукати улюблені товари<br />
             по всіх магазинах, бо вони зібрані в одному місці
           </p>
         </div>

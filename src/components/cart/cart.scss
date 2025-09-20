@@ -1101,11 +1101,11 @@
         transform: scaleX(-1);
       }
 
-      &__not-products-socials-not-open {
+      &__not-products-socials-not-open.is-visible {
         pointer-events: none;
       }
 
-      &__not-products-contacts {
+      &__not-products-contacts.is-visible {
         pointer-events: auto;
       }
     }
@@ -1131,11 +1131,11 @@
         pointer-events: all;
       }
 
-      &__not-products-socials-not-open {
+      &__not-products-socials-not-open.is-visible {
         pointer-events: auto;
       }
 
-      &__not-products-contacts {
+      &__not-products-contacts.is-visible {
         pointer-events: none;
       }
 

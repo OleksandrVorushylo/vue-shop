@@ -7,6 +7,7 @@ import FavoritesView from '@/views/FavoritesView.vue';
 import ContactView from '@/views/ContactView.vue';
 import OrderView from '@/views/OrderView.vue';
 import ProductView from '@/views/ProductView.vue';
+import NotFoundView from '@/views/NotFoundView.vue';
 
 const routes = [
   { path: '/', name: 'Головна', component: HomeView },
@@ -17,6 +18,8 @@ const routes = [
   { path: '/favorites', name: 'Вибрані', component: FavoritesView },
   { path: '/contacts', name: 'Контакти', component: ContactView },
   { path: '/order', name: 'Оформлення замовлення', component: OrderView },
+
+  { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
 ];
 
 const router = createRouter({

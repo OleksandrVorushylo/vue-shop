@@ -170,10 +170,11 @@
     margin-top: auto;
     width: 100%;
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     position: relative;
     padding-top: 16px;
+    min-height: 54px;
 
     &:after {
       position: absolute;
@@ -219,14 +220,14 @@
   &__info-price {
     font-size: 22px;
     font-weight: 500;
-    line-height: 1.32;
+    line-height: 1.15;
     color: var(--title-color);
   }
 
   &__info-unit {
     font-size: 18px;
     font-weight: 600;
-    line-height: 1.32;
+    line-height: 1.15;
     color: var(--cl-neutral-700);
   }
 

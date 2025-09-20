@@ -158,8 +158,8 @@ onMounted(() => {
           <div ref="cartOpenListBtn" @click="toggleCartFunc" class="cart__list-open-btn"></div>
           <div ref="cartListContainer" class="cart__list-container">
             <div
-              v-if="cartStore.items.length === 0"
-              class="cart__not-products-container is-visible"
+              class="cart__not-products-container"
+              :class="cartStore.items.length === 0 ? 'is-visible' : ''"
             >
               <div class="content-element cart__not-products-text">
                 <p>Замовлення зʼявиться тут</p>
@@ -241,11 +241,11 @@ onMounted(() => {
                 >
                 <LinkBtn
                   additional-class="cart__contact-link"
-                  href="mailto:info@olivkamarket.com"
+                  href="mailto:info@vueshop.com"
                   :icon="true"
                   variant="reverse"
                   icon-class="icon-mail"
-                  >info@shop.com</LinkBtn
+                  >info@vueshop.com</LinkBtn
                 >
               </div>
               <ButtonsWrapper variant="socials" additional-class="cart__contact-socials">

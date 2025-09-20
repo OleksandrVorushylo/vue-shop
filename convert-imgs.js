@@ -4,7 +4,7 @@ import fs from 'fs';
 import webp from 'webp-converter';
 
 // const IMG_DIR = "./src/images";
-const IMG_DIR = './public/products';
+const IMG_DIR = './public/images';
 
 function getFiles(dir, files_) {
   files_ = files_ || [];
