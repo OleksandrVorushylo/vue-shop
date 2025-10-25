@@ -234,8 +234,13 @@
 .password-input {
   position: relative;
 
-  input {
-    padding-right: 45px;
+  &__container {
+    width: 100%;
+    position: relative;
+
+    input {
+      padding-right: 45px;
+    }
   }
 
   &__btn {

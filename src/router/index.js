@@ -1,4 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import authRoutes from './auth';
+import profileRoutes from './profile';
+
 import HomeView from '@/views/HomeView.vue';
 import ProductsView from '@/views/ProductsView.vue';
 import DeliveryView from '@/views/DeliveryView.vue';
@@ -9,7 +12,7 @@ import OrderView from '@/views/OrderView.vue';
 import ProductView from '@/views/ProductView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
 
-const routes = [
+const publicRoutes = [
   { path: '/', name: 'Головна', component: HomeView },
   { path: '/products', name: 'Продукція', component: ProductsView },
   { path: '/product/:slug', name: 'Товар', component: ProductView },
@@ -21,6 +24,8 @@ const routes = [
 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFoundView },
 ];
+
+const routes = [...publicRoutes, ...authRoutes, ...profileRoutes];
 
 const router = createRouter({
   history: createWebHistory(),
