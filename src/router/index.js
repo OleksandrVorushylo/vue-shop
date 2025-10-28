@@ -11,6 +11,8 @@ import ContactView from '@/views/ContactView.vue';
 import OrderView from '@/views/OrderView.vue';
 import ProductView from '@/views/ProductView.vue';
 import NotFoundView from '@/views/NotFoundView.vue';
+import { useAuthStore } from '@/stores/auth.store.js';
+import { watch } from 'vue';
 
 const publicRoutes = [
   { path: '/', name: 'Головна', component: HomeView },
@@ -39,5 +41,38 @@ const router = createRouter({
     }
   },
 });
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore();
+
+  if (!authStore._authInitialized) {
+    authStore.initAuth();
+  }
+
+  if (!authStore.isReady) {
+    const unwatch = authStore.$subscribe((_, state) => {
+      if (state.isReady) {
+        unwatch();
+        handleAuthGuard(to, next, authStore);
+      }
+    });
+  } else {
+    handleAuthGuard(to, next, authStore);
+  }
+});
+
+function handleAuthGuard(to, next, authStore) {
+  const isLoggedIn = authStore.isAuthenticated;
+
+  if (to.meta.requiresAuth && !isLoggedIn) {
+    return next({ path: '/auth' });
+  }
+
+  if (to.meta.guestOnly && isLoggedIn) {
+    return next({ path: '/profile' });
+  }
+
+  next();
+}
 
 export default router;

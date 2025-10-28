@@ -1,19 +1,249 @@
 <script setup>
+import { ref, reactive, computed, watch } from 'vue';
+import { useNotification } from '@/composables/useNotification.js';
+import { useAuthStore } from '@/stores/auth.store';
+import { useVuelidate } from '@vuelidate/core';
+import { vMaska } from 'maska/vue';
 import BaseInput from '@/components/base/fields/input/BaseInput.vue';
 import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
+import router from '@/router/index.js';
+import { email, maxLength, minLength, required, sameAs } from '@/validations/registerForm.js';
+const { successNotification, errorNotification } = useNotification();
+
+const vMaskaDirective = vMaska;
 
 const props = defineProps({
   isActive: Boolean,
 });
+
+const authStore = useAuthStore();
+
+const requiredPhone = (value) => {
+  if (!value) return false;
+  const phoneRegex = /^\+38 \(0\d{2}\) \d{2}-\d{2}-\d{3}$/;
+  return phoneRegex.test(value) || 'Введіть коректний номер телефону';
+};
+
+const form = reactive({
+  fullName: '',
+  phone: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+});
+
+const customValidators = {
+  ukrainianName: {
+    validator: (value) => {
+      if (!value) return true;
+      const ukrainianNameRegex = /^[А-ЯІЇЄҐа-яіїєґ'\s\-]{2,}$/;
+      return ukrainianNameRegex.test(value);
+    },
+    message: "Введіть коректне ім'я українською мовою",
+  },
+  strongPassword: {
+    validator: (value) => {
+      if (!value) return true;
+      const strongPasswordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{6,}$/;
+      return strongPasswordRegex.test(value);
+    },
+    message: 'Пароль повинен містити мінімум 6 символів, букви та цифри',
+  },
+};
+
+const rules = computed(() => ({
+  fullName: {
+    required,
+    minLength: minLength(2),
+    maxLength: maxLength(50),
+    ukrainianName: customValidators.ukrainianName.validator,
+  },
+  phone: {
+    required,
+    requiredPhone,
+  },
+  email: {
+    required,
+    email,
+    maxLength: maxLength(100),
+  },
+  password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(50),
+    strongPassword: customValidators.strongPassword.validator,
+  },
+  confirmPassword: {
+    required,
+    sameAs: sameAs(form.password),
+  },
+}));
+
+const v = useVuelidate(rules, form);
+
+const isFormTouched = ref(false);
+const errorMsg = ref('');
+const successMsg = ref('');
+
+const successTimeouts = reactive({});
+const successShown = reactive({});
+
+watch(
+  form,
+  () => {
+    if (isFormTouched.value) {
+      v.value.$touch();
+    }
+  },
+  { deep: true },
+);
+
+const getError = (prop) => {
+  const field = v.value[prop];
+  if (!field.$dirty) return '';
+  const error = field.$errors[0];
+  if (!error) return '';
+  if (error.$validator in customValidators) {
+    return customValidators[error.$validator].message;
+  }
+  return error.$message || '';
+};
+
+const getFieldValidationClass = (prop) => {
+  const field = v.value[prop];
+  if (!field.$dirty) return '';
+
+  if (field.$invalid) {
+    successShown[prop] = false;
+    if (successTimeouts[prop]) {
+      clearTimeout(successTimeouts[prop]);
+      delete successTimeouts[prop];
+    }
+    return 'error';
+  }
+
+  if (!successShown[prop]) {
+    successShown[prop] = true;
+
+    if (!successTimeouts[prop]) {
+      successTimeouts[prop] = setTimeout(() => {
+        delete successTimeouts[prop];
+        field.$reset();
+      }, 1000);
+    }
+    return 'success';
+  }
+
+  return '';
+};
+
+const handleRegister = async (e) => {
+  e.preventDefault();
+  isFormTouched.value = true;
+  v.value.$touch();
+
+  errorMsg.value = '';
+  successMsg.value = '';
+
+  if (await v.value.$validate()) {
+    try {
+      await authStore.register({
+        fullName: form.fullName.trim(),
+        phone: form.phone.trim(),
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+      });
+
+      successMsg.value = 'Реєстрація успішна! Перевірте свою пошту для підтвердження.';
+      await router.push('/auth-confirm');
+
+      setTimeout(() => {
+        resetForm();
+      }, 2000);
+    } catch (err) {
+      // Firebase коди помилок
+      if (err.code === 'auth/email-already-in-use') {
+        errorMsg.value = 'Ця електронна адреса вже використовується.';
+        errorNotification('Ця електронна адреса вже використовується.');
+      } else if (err.code === 'auth/invalid-email') {
+        errorMsg.value = 'Некоректна електронна адреса.';
+        errorNotification('Некоректна електронна адреса.');
+      } else if (err.code === 'auth/weak-password') {
+        errorMsg.value = 'Пароль повинен містити щонайменше 6 символів.';
+        errorNotification('Пароль повинен містити щонайменше 6 символів.');
+      } else {
+        errorMsg.value = 'Помилка реєстрації. Спробуйте ще раз.';
+        errorNotification('Помилка реєстрації. Спробуйте ще раз.');
+      }
+    }
+  }
+};
+
+const handleGoogle = async () => {
+  errorMsg.value = '';
+  successMsg.value = '';
+  try {
+    await authStore.loginWithGoogle();
+    successMsg.value = 'Ви успішно увійшли через Google!';
+    successNotification('Ви успішно увійшли через Google!');
+    await router.push('/profile');
+  } catch (err) {
+    errorMsg.value = 'Помилка авторизації через Google.';
+    errorNotification('Помилка авторизації через Google.');
+  }
+};
+
+const resetForm = () => {
+  Object.keys(form).forEach((key) => {
+    form[key] = '';
+  });
+
+  v.value.$reset();
+  isFormTouched.value = false;
+
+  Object.keys(successTimeouts).forEach((key) => {
+    clearTimeout(successTimeouts[key]);
+    delete successTimeouts[key];
+  });
+
+  Object.keys(successShown).forEach((key) => {
+    delete successShown[key];
+  });
+};
 </script>
 
 <template>
-  <form class="authorization-form" :class="{ active: props.isActive }" id="form_register">
-    <BaseInput id="register-full-name" label="Ваше прізвище та ім'я *" autocomplete="name" />
-
-    <BaseInput id="register-phone" label="Телефон *" autocomplete="tel" />
+  <form
+    class="authorization-form"
+    :class="{ active: props.isActive }"
+    id="form_register"
+    @submit="handleRegister"
+  >
+    <BaseInput
+      v-model.trim="form.fullName"
+      :error="getError('fullName')"
+      :class="getFieldValidationClass('fullName')"
+      id="register-full-name"
+      label="Ваше прізвище та ім'я *"
+      autocomplete="name"
+    />
 
     <BaseInput
+      v-model="form.phone"
+      :error="getError('phone')"
+      :class="getFieldValidationClass('phone')"
+      v-maska-directive="'+38 (0##) ##-##-###'"
+      id="register-phone"
+      label="Телефон *"
+      placeholder="+38 (063) 66-66-666"
+      type="tel"
+      autocomplete="tel"
+    />
+
+    <BaseInput
+      v-model.trim="form.email"
+      :error="getError('email')"
+      :class="getFieldValidationClass('email')"
       id="register-email"
       label="Адреса електронної пошти *"
       placeholder="example@email.com"
@@ -22,20 +252,26 @@ const props = defineProps({
     />
 
     <BaseInput
+      v-model="form.password"
+      :error="getError('password')"
+      :class="getFieldValidationClass('password')"
       id="register-password"
       label="Пароль *"
       placeholder="********"
-      type="email"
-      autocomplete="password"
+      type="password"
+      autocomplete="new-password"
       variant="password"
     />
 
     <BaseInput
+      v-model="form.confirmPassword"
+      :error="getError('confirmPassword')"
+      :class="getFieldValidationClass('confirmPassword')"
       id="register-confirm-password"
       label="Повторіть пароль *"
       placeholder="********"
-      type="email"
-      autocomplete="password"
+      type="password"
+      autocomplete="new-password"
       variant="password"
     />
 
@@ -44,30 +280,24 @@ const props = defineProps({
       <a href="#" target="_blank">персональних данних</a>
     </p>
 
-    <BaseButton additional-class="authorization-form__submit">Зареєструватися</BaseButton>
+    <BaseButton
+      type="submit"
+      :disabled="authStore.loading"
+      additional-class="authorization-form__submit"
+    >
+      {{ authStore.loading ? 'Реєстрація...' : 'Зареєструватися' }}
+    </BaseButton>
 
     <div class="authorization-form__or">Або увійдіть через</div>
 
-    <BaseButton variant="second" additional-class="authorization-form__google">
+    <BaseButton
+      variant="second"
+      additional-class="authorization-form__google"
+      @click.prevent="handleGoogle"
+      :disabled="authStore.loading"
+    >
       Вхід через Google
-      <span class="icon-svg">
-        <svg
-          width="20"
-          height="20"
-          viewbox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M19.8216 8.00396H10.2114C10.2114 9.0034 10.2113 11.0021 10.2052 12.0015H15.7741C15.5607 13.001 14.8041 14.4005 13.7351 15.1051C13.7351 15.1051 13.733 15.1109 13.731 15.1099C12.3096 16.0484 10.4339 16.2614 9.04121 15.9815C6.85817 15.5478 5.13051 13.9646 4.42903 11.9537C4.43312 11.9507 4.43619 11.923 4.43926 11.921C4.0002 10.6737 4.0002 9.0034 4.43926 8.00396H4.43823C5.00391 6.16699 6.78361 4.491 8.96972 4.03226C10.728 3.65946 12.712 4.06302 14.1711 5.42826C14.3651 5.23837 16.8564 2.80582 17.0433 2.60793C12.0584 -1.90655 4.07677 -0.318482 1.09015 5.51127H1.08913C1.08913 5.51127 1.09016 5.51151 1.08403 5.5225C-0.393456 8.3859 -0.332194 11.7599 1.09424 14.4864C1.09015 14.4894 1.08709 14.4912 1.08403 14.4942C2.3767 17.0028 4.72924 18.9267 7.56372 19.6593C10.5749 20.4489 14.4069 19.9092 16.9739 17.5875L16.9769 17.5904C19.1518 15.6315 20.5057 12.2946 19.8216 8.00396Z"
-            fill="#E36B40"
-          ></path>
-        </svg>
-      </span>
+      <i class="icon-google"></i>
     </BaseButton>
   </form>
 </template>
-
-<style scoped></style>

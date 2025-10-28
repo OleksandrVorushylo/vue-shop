@@ -17,6 +17,7 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+    position: sticky;
 
     @media (min-width: 1181px) {
       position: sticky;
@@ -34,7 +35,7 @@
     }
 
     &:not(:last-child) {
-      margin-bottom: ac(12px, 4px);
+      margin-bottom: ac(6px, 4px);
     }
   }
 
@@ -50,7 +51,7 @@
     }
 
     &:not(:last-child) {
-      margin-bottom: ac(32px, 24px);
+      margin-bottom: ac(19px, 16px);
     }
   }
 
@@ -83,6 +84,10 @@
     &:hover {
       border-radius: var(--cl-light-beige);
 
+      .profile__aside-link-icon {
+        color: var(--cl-secondary-600);
+      }
+
       .profile__aside-link-text {
         color: var(--cl-secondary-600);
       }
@@ -102,6 +107,15 @@
     $size: ac(32px, 28px);
     width: $size;
     height: $size;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--cl-secondary-700);
+    transition: 0.3s;
+
+    i {
+      font-size: ac(24px, 22px);
+    }
   }
 
   &__aside-link-text {
@@ -119,6 +133,11 @@
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
+
+    i {
+      color: var(--cl-secondary-600);
+      font-size: 20px;
+    }
 
     @media (max-width: 551px) {
       width: 100%;
@@ -157,7 +176,7 @@
     }
 
     &:not(:last-child) {
-      margin-bottom: ac(40px, 24px);
+      margin-bottom: ac(32px, 24px);
     }
   }
 
@@ -451,7 +470,6 @@
 
   /* Історія замовлень */
   &__orders {
-    padding-left: ac(8px, 0px, 1300);
     width: 100%;
     max-width: 792px;
     margin-bottom: ac(48px, 24px);
@@ -484,14 +502,11 @@
         }
         &-1 {
           width: 19.5%;
-          justify-content: flex-start;
-          padding-left: 16px;
           @media (max-width: 768px) {
             width: 20%;
           }
           @media (max-width: 610px) {
             width: 24%;
-            padding-left: 9px;
           }
         }
         &-2 {

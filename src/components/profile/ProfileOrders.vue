@@ -3,7 +3,7 @@ import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
 </script>
 
 <template>
-  <h1 class="profile__title large-title-5">Історія замовлень</h1>
+  <h1 class="profile__title large-title-4">Історія замовлень</h1>
   <div class="profile__orders">
     <div class="profile__orders-nav">
       <div class="profile__orders-nav__col profile__orders-nav__col-1">

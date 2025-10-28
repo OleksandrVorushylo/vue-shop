@@ -258,44 +258,15 @@
     cursor: pointer;
     transition: 0.3s;
 
-    .svg-icon {
-      --size: 24px;
-      width: var(--size);
-      height: var(--size);
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translateY(-50%) translateX(-50%);
+    i {
+      color: var(--cl-neutral-700);
+      font-size: 24px;
       transition: 0.3s;
-
-      svg {
-        path {
-          transition: 0.3s;
-        }
-      }
-    }
-
-    &.is-password-hidden {
-      .svg-icon {
-        &.icon-not-show {
-          opacity: 1;
-        }
-      }
-    }
-
-    &:not(.is-password-hidden) {
-      .svg-icon {
-        &.icon-not-show {
-          opacity: 0;
-        }
-      }
     }
 
     &:hover {
-      svg {
-        path {
-          fill: var(--cl-secondary-500);
-        }
+      i {
+        color: var(--cl-secondary-500);
       }
     }
   }

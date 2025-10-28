@@ -21,7 +21,7 @@ export function useNotification() {
     };
   }
 
-  const successNotification = (msg, title = 'Success', duration = 3000) => {
+  const successNotification = (msg, title = 'Успішно', duration = 3000) => {
     showNotification({
       text: msg,
       title,
@@ -31,7 +31,7 @@ export function useNotification() {
     });
   };
 
-  const errorNotification = (msg, title = 'Error', duration = 3000) => {
+  const errorNotification = (msg, title = 'Помилка', duration = 3000) => {
     showNotification({
       text: msg,
       title,
@@ -41,7 +41,7 @@ export function useNotification() {
     });
   };
 
-  const infoNotification = (msg, title = 'Info', duration = 3000) => {
+  const infoNotification = (msg, title = 'Повідомлення', duration = 3000) => {
     showNotification({
       text: msg,
       title,

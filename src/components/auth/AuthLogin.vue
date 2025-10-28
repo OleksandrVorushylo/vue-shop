@@ -1,64 +1,249 @@
 <script setup>
+import { ref, reactive, computed, watch } from 'vue';
+import { useNotification } from '@/composables/useNotification.js';
+import { useAuthStore } from '@/stores/auth.store';
+import { useVuelidate } from '@vuelidate/core';
+import { required, email, minLength, maxLength } from '@/validations/loginForm.js';
 import BaseInput from '@/components/base/fields/input/BaseInput.vue';
 import BaseButton from '@/components/base/buttons/button/BaseButton.vue';
-import { computed } from 'vue';
+import router from '@/router/index.js';
+const { successNotification, errorNotification } = useNotification();
 
 const props = defineProps({
   isActive: Boolean,
 });
+
+const authStore = useAuthStore();
+
+const form = reactive({
+  email: '',
+  password: '',
+});
+
+const rules = computed(() => ({
+  email: {
+    required,
+    email,
+    maxLength: maxLength(100),
+  },
+  password: {
+    required,
+    minLength: minLength(6),
+    maxLength: maxLength(50),
+  },
+}));
+
+const v = useVuelidate(rules, form);
+
+const isFormTouched = ref(false);
+const errorMsg = ref('');
+const successMsg = ref('');
+
+const successTimeouts = reactive({});
+const successShown = reactive({});
+
+watch(
+  form,
+  () => {
+    if (isFormTouched.value) {
+      v.value.$touch();
+    }
+  },
+  { deep: true },
+);
+
+const getError = (prop) => {
+  const field = v.value[prop];
+  if (!field.$dirty) return '';
+  const error = field.$errors[0];
+  if (!error) return '';
+  return error.$message || '';
+};
+
+const getFieldValidationClass = (prop) => {
+  const field = v.value[prop];
+  if (!field.$dirty) return '';
+
+  if (field.$invalid) {
+    successShown[prop] = false;
+    if (successTimeouts[prop]) {
+      clearTimeout(successTimeouts[prop]);
+      delete successTimeouts[prop];
+    }
+    return 'error';
+  }
+
+  if (!successShown[prop]) {
+    successShown[prop] = true;
+
+    if (!successTimeouts[prop]) {
+      successTimeouts[prop] = setTimeout(() => {
+        delete successTimeouts[prop];
+        field.$reset();
+      }, 1000);
+    }
+    return 'success';
+  }
+
+  return '';
+};
+
+const handleLogin = async (e) => {
+  e.preventDefault();
+  isFormTouched.value = true;
+  v.value.$touch();
+
+  errorMsg.value = '';
+  successMsg.value = '';
+
+  if (await v.value.$validate()) {
+    try {
+      await authStore.login({
+        email: form.email.trim().toLowerCase(),
+        password: form.password,
+      });
+
+      successMsg.value = 'Ви успішно увійшли!';
+      successNotification('Ви успішно увійшли!', 'Вітаємо', 1200);
+      setTimeout(() => {
+        router.push('/profile');
+      }, 0);
+    } catch (err) {
+      console.error('login error', err);
+      if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found') {
+        errorNotification('Неправильна електронна адреса або пароль.');
+      } else if (err.code === 'auth/invalid-email') {
+        errorNotification('Некоректна електронна адреса.');
+      } else if (err.code === 'auth/too-many-requests') {
+        errorNotification('Забагато спроб входу. Спробуйте пізніше.');
+      } else {
+        errorNotification('Помилка входу. Спробуйте ще раз.');
+      }
+    }
+  }
+};
+
+const handleGoogle = async () => {
+  errorMsg.value = '';
+  successMsg.value = '';
+  try {
+    await authStore.loginWithGoogle();
+    successMsg.value = 'Ви успішно увійшли через Google!';
+    successNotification('Ви успішно увійшли!', 'Вітаємо', 1200);
+    await router.push('/profile');
+  } catch (err) {
+    console.error('google login error', err);
+    errorMsg.value = 'Помилка авторизації через Google.';
+    errorNotification('Помилка авторизації через Google.');
+  }
+};
+
+const handleForgotPassword = async () => {
+  if (!form.email) {
+    errorMsg.value = 'Введіть електронну адресу, щоб відновити пароль.';
+    return;
+  }
+
+  v.value.email.$touch();
+  if (v.value.email.$invalid) {
+    errorMsg.value = 'Введіть коректну електронну адресу для відновлення пароля.';
+    return;
+  }
+
+  errorMsg.value = '';
+  successMsg.value = '';
+
+  try {
+    await authStore.sendPasswordReset(form.email.trim().toLowerCase());
+    successMsg.value = 'Лист для відновлення пароля відправлено на вашу пошту.';
+  } catch (err) {
+    console.error('reset password error', err);
+    if (err.code === 'auth/user-not-found') {
+      errorMsg.value = 'Користувача з такою адресою не знайдено.';
+    } else {
+      errorMsg.value = 'Не вдалося відправити лист. Перевірте електронну адресу.';
+    }
+  }
+};
+
+const resetForm = () => {
+  Object.keys(form).forEach((key) => {
+    form[key] = '';
+  });
+
+  v.value.$reset();
+  isFormTouched.value = false;
+
+  Object.keys(successTimeouts).forEach((key) => {
+    clearTimeout(successTimeouts[key]);
+    delete successTimeouts[key];
+  });
+
+  Object.keys(successShown).forEach((key) => {
+    delete successShown[key];
+  });
+};
 </script>
 
 <template>
-  <form class="authorization-form" :class="{ active: props.isActive }" id="login_form">
+  <form
+    class="authorization-form"
+    :class="{ active: props.isActive }"
+    id="login_form"
+    @submit="handleLogin"
+  >
     <div class="authorization-form__title">Щоб увійти введіть електронну адресу або телефон</div>
+
     <BaseInput
+      v-model.trim="form.email"
+      :error="getError('email')"
+      :class="getFieldValidationClass('email')"
       id="login-email"
       label="Адреса електронної пошти *"
       placeholder="example@email.com"
       type="email"
       autocomplete="email"
     />
+
     <BaseInput
+      v-model="form.password"
+      :error="getError('password')"
+      :class="getFieldValidationClass('password')"
       id="login-password"
       label="Пароль *"
       placeholder="********"
-      type="email"
-      autocomplete="password"
+      type="password"
+      autocomplete="current-password"
       variant="password"
     />
+
     <p class="authorization-form__personal-data">
       Натискаючи на кнопку ви автоматично даєте згоду на обробку
       <a href="#" target="_blank">персональних данних</a>
     </p>
 
-    <BaseButton additional-class="authorization-form__submit">Увійти</BaseButton>
+    <BaseButton
+      type="submit"
+      additional-class="authorization-form__submit"
+      :disabled="authStore.loading"
+    >
+      {{ authStore.loading ? 'Вхід...' : 'Увійти' }}
+    </BaseButton>
 
     <div class="authorization-form__or">Або увійдіть через</div>
 
-    <BaseButton variant="second" additional-class="authorization-form__google">
+    <BaseButton
+      variant="second"
+      additional-class="authorization-form__google"
+      @click.prevent="handleGoogle"
+      :disabled="authStore.loading"
+    >
       Вхід через Google
-      <span class="icon-svg">
-        <svg
-          width="20"
-          height="20"
-          viewbox="0 0 20 20"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            fill-rule="evenodd"
-            clip-rule="evenodd"
-            d="M19.8216 8.00396H10.2114C10.2114 9.0034 10.2113 11.0021 10.2052 12.0015H15.7741C15.5607 13.001 14.8041 14.4005 13.7351 15.1051C13.7351 15.1051 13.733 15.1109 13.731 15.1099C12.3096 16.0484 10.4339 16.2614 9.04121 15.9815C6.85817 15.5478 5.13051 13.9646 4.42903 11.9537C4.43312 11.9507 4.43619 11.923 4.43926 11.921C4.0002 10.6737 4.0002 9.0034 4.43926 8.00396H4.43823C5.00391 6.16699 6.78361 4.491 8.96972 4.03226C10.728 3.65946 12.712 4.06302 14.1711 5.42826C14.3651 5.23837 16.8564 2.80582 17.0433 2.60793C12.0584 -1.90655 4.07677 -0.318482 1.09015 5.51127H1.08913C1.08913 5.51127 1.09016 5.51151 1.08403 5.5225C-0.393456 8.3859 -0.332194 11.7599 1.09424 14.4864C1.09015 14.4894 1.08709 14.4912 1.08403 14.4942C2.3767 17.0028 4.72924 18.9267 7.56372 19.6593C10.5749 20.4489 14.4069 19.9092 16.9739 17.5875L16.9769 17.5904C19.1518 15.6315 20.5057 12.2946 19.8216 8.00396Z"
-            fill="#E36B40"
-          ></path>
-        </svg>
-      </span>
+      <i class="icon-google"></i>
     </BaseButton>
 
     <p class="authorization-form__personal-data">
-      <a href="#" target="_blank">Забули пароль?</a>
+      <router-link to="/auth-forgot">Забули пароль?</router-link>
     </p>
   </form>
 </template>
-
-<style scoped></style>

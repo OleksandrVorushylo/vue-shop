@@ -7,10 +7,11 @@ export default [
   {
     path: '/profile',
     component: ProfileLayout,
+    meta: { requiresAuth: true },
     children: [
       {
         path: '',
-        redirect: 'orders',
+        redirect: '/profile/orders',
       },
       {
         path: 'orders',

@@ -6,6 +6,7 @@ import BaseNotification from '@/components/base/notification/BaseNotification.vu
 
 import { useRoute } from 'vue-router';
 import { computed } from 'vue';
+import BaseLoader from '@/components/base/loader/BaseLoader.vue';
 
 const route = useRoute();
 
@@ -15,6 +16,7 @@ const hideSiteCart = computed(() => {
 </script>
 
 <template>
+  <BaseLoader></BaseLoader>
   <SiteHeader></SiteHeader>
   <main class="main" id="content">
     <router-view></router-view>

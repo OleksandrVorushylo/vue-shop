@@ -1,6 +1,17 @@
 <script setup>
 import './profile.scss';
 import ProfileSidebar from '@/components/profile/ProfileSidebar.vue';
+import { onMounted, onUnmounted } from 'vue';
+
+const appEl = document.querySelector('#app');
+
+onMounted(() => {
+  if (appEl) appEl.classList.add('is-visible');
+});
+
+onUnmounted(() => {
+  if (appEl) appEl.classList.remove('is-visible');
+});
 </script>
 
 <template>

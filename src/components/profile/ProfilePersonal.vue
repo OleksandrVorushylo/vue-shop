@@ -12,7 +12,7 @@ const citiesOptions = [
 </script>
 
 <template>
-  <h1 class="profile__title large-title-5">Особисті дані</h1>
+  <h1 class="profile__title large-title-4">Особисті дані</h1>
   <form class="profile__form">
     <div class="profile__form-item">
       <h3 class="profile__form-title">

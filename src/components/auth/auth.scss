@@ -97,6 +97,96 @@
   }
 
   /* forms */
+
+  &-content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    max-width: ac(520px, 420px);
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #d3d3d9;
+    border-radius: ac(24px, 20px);
+    padding: ac(40px, 20px);
+    background: var(--cl-white);
+    position: relative;
+    overflow: hidden;
+    min-height: ac(320px, 290px);
+
+    &__text {
+      width: 100%;
+      text-align: center;
+      position: relative;
+      z-index: 10;
+
+      a {
+        display: inline-flex;
+      }
+
+      &:not(:last-child) {
+        margin-bottom: ac(32px, 24px);
+      }
+    }
+
+    &__buttons {
+      margin-top: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      width: 100%;
+      position: relative;
+      z-index: 10;
+
+      .btn {
+        width: 100%;
+      }
+    }
+
+    &__successful-decors {
+      position: absolute;
+      inset: 0;
+
+      .confetti-canvas {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+      }
+
+      &:before {
+        position: absolute;
+        inset: 0;
+        z-index: 5;
+        content: '';
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 1) 60%);
+      }
+    }
+
+    &__form {
+      .meta-input {
+        &:not(:last-child) {
+          margin-bottom: 21px;
+        }
+        label {
+          font-size: 14px;
+        }
+        input {
+        }
+      }
+    }
+
+    &__form-title {
+      font-weight: 600;
+      font-size: ac(20px, 16px);
+      line-height: 140%;
+      color: var(--cl-black-regular);
+      margin-bottom: ac(40px, 24px);
+    }
+  }
+
   &-contents {
     width: 100%;
     display: flex;
@@ -217,11 +307,26 @@
       flex-direction: row;
       width: 100%;
 
+      i {
+        font-size: 22px;
+        margin-left: 4px;
+        color: var(--cl-secondary-600);
+      }
+
       .btn {
         &__text {
           gap: 4px;
         }
       }
+    }
+
+    &__error {
+      margin-top: 5px;
+      font-family: var(--font-main);
+      font-size: ac(14px, 12px);
+      line-height: 1.2;
+      font-weight: 600;
+      color: var(--cl-red-500);
     }
   }
 }
