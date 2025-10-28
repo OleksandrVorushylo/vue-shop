@@ -106,9 +106,9 @@ import IconBtn from '@/components/base/buttons/icon-button/IconBtn.vue';
           <div class="footer__bottom-info-image">
             <img src="/images/master-card-visa.svg" alt="Payment Image" />
           </div>
-          <a target="_blank" href="https://metamorfosi.agency/" class="footer__bottom-dev">
-            <img src="/images/metamorfosi.svg" alt="Logo" />
-          </a>
+          <!--          <a target="_blank" href="https://metamorfosi.agency/" class="footer__bottom-dev">-->
+          <!--            <img src="/images/metamorfosi.svg" alt="Logo" />-->
+          <!--          </a>-->
         </div>
       </div>
     </div>
